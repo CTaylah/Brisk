@@ -3,6 +3,7 @@
 
 #include "glad/glad.h"
 #include "glfw/glfw3.h"
+#include  "glm/common.hpp"
 
 #include "FileHandler.h"
 #include "ShaderProgram.h"
@@ -43,7 +44,7 @@ int main()
 
     ShaderProgram shaderProgram(vertexShaderFile, fragmentShaderFile);
 
-    std::vector<float> vertices = {
+    float vertices[]= {
         0.5f, 0.5f, 0.0f,   // top right
         0.5f, -0.5f, 0.0f,  // bottom right
         -0.5f, -0.5f, 0.0f, // bottom left
@@ -60,12 +61,12 @@ int main()
     glGenVertexArrays(1, &vertexArray);
     glBindVertexArray(vertexArray);
 
-    // unsigned int bufferID;
-    // glGenBuffers(1, &bufferID);
-    // glBindBuffer(GL_ARRAY_BUFFER, bufferID);
-    // glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    unsigned int bufferID;
+    glGenBuffers(1, &bufferID);
+    glBindBuffer(GL_ARRAY_BUFFER, bufferID);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-    VertexBuffer vertexBuffer(&vertices);
+//    VertexBuffer vertexBuffer(&vertices);
 
     unsigned int indexBufferID;
     glGenBuffers(1, &indexBufferID);
