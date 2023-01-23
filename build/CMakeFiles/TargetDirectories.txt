@@ -1,0 +1,3 @@
+C:/dev/C++/Brisk/build/CMakeFiles/Brisk.dir
+C:/dev/C++/Brisk/build/CMakeFiles/ALL_BUILD.dir
+C:/dev/C++/Brisk/build/CMakeFiles/ZERO_CHECK.dir
