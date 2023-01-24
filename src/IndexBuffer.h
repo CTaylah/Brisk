@@ -4,16 +4,14 @@
 #include <vector>
 
 #include "glad/glad.h"
-#include "Vertex.h"
 
-class VertexBuffer
+class IndexBuffer
 {
 public:
-    VertexBuffer(std::vector<Vertex> vertices);
-    void subData(std::vector<Vertex> newVertices);
+    IndexBuffer(std::vector<unsigned int> data);
     void bind();
     void unbind();
-    ~VertexBuffer();
+    ~IndexBuffer();
 
 private:
     unsigned int m_bufferID = 0;
