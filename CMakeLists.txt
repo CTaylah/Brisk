@@ -30,5 +30,6 @@ target_link_libraries(${PROJECT_NAME} ${libraryPath}/assimp/assimp-vc143-mt.lib)
 target_link_libraries(${PROJECT_NAME} ${libraryPath}/glfw/glfw3.lib)
 
 include_directories(${CMAKE_SOURCE_DIR}/dep/include)
+include_directories(${CMAKE_SOURCE_DIR}/external)
 add_subdirectory(${CMAKE_SOURCE_DIR}/external)
 add_subdirectory(${CMAKE_SOURCE_DIR}/src)

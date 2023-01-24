@@ -53,6 +53,14 @@ void ShaderProgram::compileShaders()
 
     // TODO: Error  logging
     glLinkProgram(m_programID);
+    glGetProgramiv(m_programID, GL_LINK_STATUS, &success);
+
+    glGetShaderiv(fragmentShaderID, GL_COMPILE_STATUS, &success);
+    if (!success)
+    {
+        glGetShaderInfoLog(fragmentShaderID, 512, NULL, infoLog);
+        std::cout << "Error: Shader Program Linking failed" << std::endl;
+    }
 
     glDeleteShader(vertexShaderID);
     glDeleteShader(fragmentShaderID);
@@ -66,4 +74,42 @@ void ShaderProgram::use()
 ShaderProgram::~ShaderProgram()
 {
     glDeleteProgram(m_programID);
+}
+void ShaderProgram::uploadUniformf(const std::string &name, float value)
+{
+    int location = glGetUniformLocation(m_programID, name.c_str());
+    glUniform1f(location, value);
+}
+void ShaderProgram::uploadUniform2f(const std::string &name, glm::vec2 &value)
+{
+    int location = glGetUniformLocation(m_programID, name.c_str());
+    glUniform2f(location, value.x, value.y);
+}
+void ShaderProgram::uploadUniform3f(const std::string &name, glm::vec3 &value)
+{
+    int location = glGetUniformLocation(m_programID, name.c_str());
+    glUniform3f(location, value.x, value.y, value.z);
+}
+void ShaderProgram::uploadUniform4f(const std::string &name, glm::vec4 &value)
+{
+    int location = glGetUniformLocation(m_programID, name.c_str());
+    glUniform4f(location, value.x, value.y, value.z, value.w);
+}
+
+void ShaderProgram::uploadUniformInt(const std::string &name, int value)
+{
+    int location = glGetUniformLocation(m_programID, name.c_str());
+    glUniform1i(location, value);
+}
+
+void ShaderProgram::UploadUniformMat3(const std::string &name, const glm::mat3 &matrix)
+{
+    GLint location = glGetUniformLocation(m_programID, name.c_str());
+    glUniformMatrix3fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
+}
+
+void ShaderProgram::UploadUniformMat4(const std::string &name, const glm::mat4 &matrix)
+{
+    GLint location = glGetUniformLocation(m_programID, name.c_str());
+    glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
 }
