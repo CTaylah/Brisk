@@ -1,11 +1,12 @@
 #include "glad/glad.h"
 #include <iostream>
 #include <vector>
+#include "Vertex.h"
 
 class VertexBuffer
 {
 public:
-    VertexBuffer(std::vector<float> *vertices);
+    VertexBuffer(std::vector<Vertex> vertices);
     void subData();
     void bind();
     void unbind();
@@ -13,5 +14,5 @@ public:
 
 private:
     unsigned int m_bufferID = 0;
-    std::vector<float> *m_vertices;
+    std::vector<Vertex> m_vertices;
 };

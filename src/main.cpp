@@ -3,11 +3,12 @@
 
 #include "glad/glad.h"
 #include "glfw/glfw3.h"
-#include  "glm/common.hpp"
+#include "glm/glm.hpp"
 
 #include "FileHandler.h"
 #include "ShaderProgram.h"
 #include "VertexBuffer.h"
+#include "Vertex.h"
 
 bool initializeGlfw();
 
@@ -44,14 +45,32 @@ int main()
 
     ShaderProgram shaderProgram(vertexShaderFile, fragmentShaderFile);
 
-    float vertices[]= {
+    float verticess[] = {
         0.5f, 0.5f, 0.0f,   // top right
         0.5f, -0.5f, 0.0f,  // bottom right
         -0.5f, -0.5f, 0.0f, // bottom left
         -0.5f, 0.5f, 0.0f   // top left
     };
 
-    std::cout << sizeof(vertices) << std::endl;
+    Vertex vert1;
+    vert1.Position = glm::vec3(0.5f, 0.5f, 0.0f);
+
+    Vertex vert2;
+    vert2.Position = glm::vec3(0.5f, -0.5f, 0.0f);
+
+    Vertex vert3;
+    vert3.Position = glm::vec3(-0.5f, -0.5f, 0.0f);
+
+    Vertex vert4;
+    vert4.Position = glm::vec3(-0.5f, 0.5f, 0.0f);
+
+    std::vector<Vertex> vertices = {vert1, vert2, vert3, vert4};
+
+    // for (int i = 0; i < 12; i++)
+    // {
+
+    //     std::cout << p[i] << std::endl;
+    // }
 
     unsigned int indices[] = {
         0, 1, 3,
@@ -61,12 +80,12 @@ int main()
     glGenVertexArrays(1, &vertexArray);
     glBindVertexArray(vertexArray);
 
-    unsigned int bufferID;
-    glGenBuffers(1, &bufferID);
-    glBindBuffer(GL_ARRAY_BUFFER, bufferID);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    // unsigned int bufferID;
+    // glGenBuffers(1, &bufferID);
+    // glBindBuffer(GL_ARRAY_BUFFER, bufferID);
+    // glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * vertices.size(), p, GL_STATIC_DRAW);
 
-//    VertexBuffer vertexBuffer(&vertices);
+    VertexBuffer vertexBuffer(vertices);
 
     unsigned int indexBufferID;
     glGenBuffers(1, &indexBufferID);
