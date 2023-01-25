@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "glad/glad.h"
-#include "Vertex.h"
+#include "Structures.h"
 
 class VertexBuffer
 {

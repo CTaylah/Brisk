@@ -9,9 +9,11 @@
 
 #include "FileHandler.h"
 #include "ShaderProgram.h"
+#include "VertexArray.h"
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
-#include "Vertex.h"
+#include "Structures.h"
+#include "Texture.h"
 
 bool initializeGlfw();
 
@@ -66,32 +68,14 @@ int main()
         0, 1, 3,
         1, 2, 3};
 
-    unsigned int vertexArray;
-    glGenVertexArrays(1, &vertexArray);
-    glBindVertexArray(vertexArray);
+    VertexArray vertexArray;
 
     VertexBuffer vertexBuffer(vertices);
     IndexBuffer indexBuffer(indices);
 
-    int width, height, nrChannels;
-    unsigned char *data = stbi_load("../../assets/container.jpg", &width, &height, &nrChannels, 0);
+    Texture texture("../../assets/container.jpg");
 
-    if (!data)
-        std::cout << "Failed to load texture" << std::endl;
-
-    unsigned int texture;
-    glGenTextures(1, &texture);
-    glBindTexture(GL_TEXTURE_2D, texture);
-    // set the texture wrapping/filtering options (on the currently bound texture object)
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-    glGenerateMipmap(GL_TEXTURE_2D);
-
-    stbi_image_free(data);
+    vertexArray.unbind();
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (const void *)0);
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (const void *)(sizeof(float) * 3));
@@ -106,15 +90,15 @@ int main()
         glfwSwapBuffers(window);
 
         shaderProgram.use();
-        glBindTexture(GL_TEXTURE_2D, texture);
-        glBindVertexArray(vertexArray);
+        // glBindTexture(GL_TEXTURE_2D, texture);
+        // texture.bind();
 
+        vertexArray.bind();
         float timeValue = glfwGetTime();
         float normalized = (sin(timeValue)) + 0.5f;
-        float normalized2 = (sin(timeValue * 2)) + 0.5f;
+        float normalized2 = (sin(timeValue * 5)) + 0.5f;
 
-        shaderProgram.uploadUniform4f("color", glm::vec4(normalized2, .4, normalized, 1));
-        glBindVertexArray(vertexArray);
+        shaderProgram.uploadUniform4f("color", glm::vec4(normalized2, .9, normalized, 1));
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
         glfwPollEvents();
