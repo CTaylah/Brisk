@@ -3,6 +3,7 @@
 Texture::Texture(const std::string imageFilePath)
 {
     glGenTextures(1, &m_textureID);
+    glActiveTexture(GL_TEXTURE0);
     bind();
     setTextureParamters();
     loadTextureData(imageFilePath);
