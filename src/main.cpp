@@ -7,6 +7,8 @@
 
 #include "stb_image.h"
 
+#include "spdlog/spdlog.h"
+
 #include "ShaderProgram.h"
 #include "VertexArray.h"
 #include "VertexBuffer.h"
@@ -34,7 +36,10 @@ void mouse_callback(GLFWwindow *window, double xpos, double ypos);
 int main()
 
 {
+    spdlog::info("Welcome to spdlog!");
     std::cout << "running" << std::endl;
+
+    SPDLOG_TRACE("Some trace message with param {}", 42);
 
     const std::string pathToShaders = "..\\..\\shaders\\";
 
