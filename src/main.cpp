@@ -10,11 +10,14 @@
 #include "spdlog/spdlog.h"
 
 #include "ShaderProgram.h"
+#include "VertexBufferLayout.h"
 #include "VertexArray.h"
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
 #include "Structures.h"
 #include "Texture.h"
+#include "Mesh.h"
+#include "Renderer.h"
 
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
@@ -89,19 +92,27 @@ int main()
         0, 1, 3,
         1, 2, 3};
 
-    VertexArray vertexArray;
 
+    VertexArray vertexArray;
+    Texture texture("../../assets/container.jpg");
     VertexBuffer vertexBuffer(vertices);
     IndexBuffer indexBuffer(indices);
+    Renderer renderer;
 
-    Texture texture("../../assets/container.jpg");
 
-    // vertexArray.unbind();
+    VertexBufferLayout layout;
+    layout.push<float>(3);
+    layout.push<float>(2);
+    std::cout << glGetError() << std::endl; 
+    vertexArray.addBuffer(vertexBuffer, layout);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (const void *)0);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (const void *)(sizeof(float) * 3));
-    glEnableVertexAttribArray(0);
-    glEnableVertexAttribArray(1);
+    std::cout << glGetError() << std::endl; 
+    
+    // glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (const void *)0);
+    // glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (const void *)(sizeof(float) * 3));
+    // glEnableVertexAttribArray(0);
+    // glEnableVertexAttribArray(1);
+    
 
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
@@ -132,24 +143,21 @@ int main()
         lastFrame = currentFrame;
 
         glfwSwapBuffers(window);
-
-        glClearColor(0.5f, 0.1f, 0.4f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
-
         view = glm::lookAt(cameraPosition, cameraPosition + cameraFront, cameraUp);
+
+        renderer.clear();
 
         shaderProgram.use();
         shaderProgram.UploadUniformMat4("model", model);
         shaderProgram.UploadUniformMat4("view", view);
         shaderProgram.UploadUniformMat4("projection", projection);
 
-        vertexArray.bind();
         float timeValue = glfwGetTime();
         float normalized = (sin(timeValue)) + 0.5f;
         float normalized2 = (sin(timeValue * 5)) + 0.5f;
 
         shaderProgram.uploadUniform4f("color", glm::vec4(normalized2, .9, normalized, 1));
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        renderer.draw(vertexArray, indexBuffer, shaderProgram);
         glBindVertexArray(0);
         processInput(window);
         glfwPollEvents();

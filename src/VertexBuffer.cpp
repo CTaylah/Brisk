@@ -7,12 +7,12 @@ VertexBuffer::VertexBuffer(std::vector<Vertex> vertices)
     glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * vertices.size(), &vertices[0], GL_STATIC_DRAW);
 }
 
-void VertexBuffer::subData(std::vector<Vertex> newVertices)
-{
-    bind();
-    // Need to add something about buffer size not being greater than current buffer size
-    glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(Vertex) * newVertices.size(), &newVertices[0]);
-}
+// void VertexBuffer::subData(std::vector<Vertex> newVertices)
+// {
+//     bind();
+//     // Need to add something about buffer size not being greater than current buffer size
+//     glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(Vertex) * newVertices.size(), &newVertices[0]);
+// }
 
 void VertexBuffer::bind()
 {

@@ -12,7 +12,4 @@ struct Vertex
     glm::vec2 textureCoordinates;
 };
 
-struct Material
-{
-    ShaderProgram shaderProgram;
-};
+

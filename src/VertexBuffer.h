@@ -10,6 +10,7 @@ class VertexBuffer
 {
 public:
     VertexBuffer(std::vector<Vertex> vertices);
+    VertexBuffer() = default;
     void subData(std::vector<Vertex> newVertices);
     void bind();
     void unbind();
