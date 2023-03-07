@@ -2,7 +2,16 @@
 #include <vector>
 
 #include "glad/glad.h"
+
+#include "imgui/imgui.h"
+#include "imgui/imgui_impl_glfw.h"
+#include "imgui/imgui_impl_opengl3.h"
 #include "glfw/glfw3.h"
+
+#ifdef APIENTRY
+#undef APIENTRY
+#endif
+
 #include "glm/glm.hpp"
 
 #include "stb_image.h"
@@ -18,6 +27,7 @@
 #include "Texture.h"
 #include "Mesh.h"
 #include "Renderer.h"
+
 
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
@@ -48,7 +58,7 @@ int main()
 
     initializeGlfw();
 
-    GLFWwindow *window = glfwCreateWindow(800, 600, "Learn SHit", NULL, NULL);
+    GLFWwindow *window = glfwCreateWindow(800, 600, "Brisk", NULL, NULL);
     if (window == nullptr)
     {
         std::cout << "Failed to create GLFW Window" << std::endl;
@@ -57,13 +67,30 @@ int main()
     }
 
     glfwMakeContextCurrent(window);
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
     glfwSetCursorPosCallback(window, mouse_callback);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
         std::cout << "Failed to initialize GLAD" << std::endl;
     }
+
+    const char* glsl_version = "#version 130";
+    // Setup Dear ImGui context
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO(); (void)io;
+    //io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+    //io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+
+    // Setup Dear ImGui style
+    ImGui::StyleColorsDark();
+    //ImGui::StyleColorsLight();
+
+    // Setup Platform/Renderer backends
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    ImGui_ImplOpenGL3_Init(glsl_version);
+   
 
     std::string vertexShaderFile = (pathToShaders + "vertex.vert");
     std::string fragmentShaderFile = (pathToShaders + "fragment.frag");
@@ -103,10 +130,8 @@ int main()
     VertexBufferLayout layout;
     layout.push<float>(3);
     layout.push<float>(2);
-    std::cout << glGetError() << std::endl; 
     vertexArray.addBuffer(vertexBuffer, layout);
 
-    std::cout << glGetError() << std::endl; 
     
     // glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (const void *)0);
     // glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (const void *)(sizeof(float) * 3));
@@ -136,15 +161,23 @@ int main()
 
     shaderProgram.uploadUniformInt("ourTexture", 0);
 
+    // Start the Dear ImGui frame
+
+    bool showWindow = true;
     while (!glfwWindowShouldClose(window))
-    {
-        float currentFrame = glfwGetTime();
+    {    
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
+        ImGui::ShowDemoWindow(&showWindow);
+        float currentFrame = (float)glfwGetTime();
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
         glfwSwapBuffers(window);
         view = glm::lookAt(cameraPosition, cameraPosition + cameraFront, cameraUp);
 
+        ImGui::Render();
         renderer.clear();
 
         shaderProgram.use();
@@ -152,12 +185,12 @@ int main()
         shaderProgram.UploadUniformMat4("view", view);
         shaderProgram.UploadUniformMat4("projection", projection);
 
-        float timeValue = glfwGetTime();
+        float timeValue = (float)glfwGetTime();
         float normalized = (sin(timeValue)) + 0.5f;
         float normalized2 = (sin(timeValue * 5)) + 0.5f;
-
         shaderProgram.uploadUniform4f("color", glm::vec4(normalized2, .9, normalized, 1));
         renderer.draw(vertexArray, indexBuffer, shaderProgram);
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
         glBindVertexArray(0);
         processInput(window);
         glfwPollEvents();
@@ -189,20 +222,23 @@ void processInput(GLFWwindow *window)
         cameraPosition += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         exit(0);
+    if (glfwGetKey(window, GLFW_KEY_M) == GLFW_PRESS)
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
 }
 
 void mouse_callback(GLFWwindow *window, double xpos, double ypos)
 {
     if (firstMove)
     {
-        lastX = xpos;
-        lastY = ypos;
+        lastX = (float)xpos;
+        lastY = (float)ypos;
     }
 
-    float xoffset = xpos - lastX;
-    float yoffset = lastY - ypos;
-    lastX = xpos;
-    lastY = ypos;
+    float xoffset = (float)xpos - lastX;
+    float yoffset = lastY - (float)ypos;
+    lastX = (float)xpos;
+    lastY = (float)ypos;
 
     firstMove = false;
 

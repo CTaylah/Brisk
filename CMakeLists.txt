@@ -10,6 +10,7 @@ file(GLOB_RECURSE SOURCE_FILES
     ${CMAKE_SOURCE_DIR}/src/*.c
     ${CMAKE_SOURCE_DIR}/src/*.cpp
     ${CMAKE_SOURCE_DIR}/external/*.c
+    ${CMAKE_SOURCE_DIR}/external/*.cpp
     )
 
 #Add header files

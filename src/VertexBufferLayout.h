@@ -2,6 +2,7 @@
 
 #include <vector>
 #include "glad/glad.h"
+#include <iostream>
 
 struct VertexBufferElement
 {
@@ -15,8 +16,12 @@ struct VertexBufferElement
         {
             case GL_FLOAT: return 4;
             case GL_UNSIGNED_INT: return 4;
+            case GL_UNSIGNED_BYTE: return 4;
         }
+        std::cout << "INVALID TYPE: VertexBufferElemet::getSizeOfType" << std::endl;
+        return 0;
     }
+
 };
 class VertexBufferLayout
 {
