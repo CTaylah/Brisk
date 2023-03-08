@@ -1,3 +1,15 @@
+#include "Renderer/ShaderProgram.h"
+#include "Renderer/VertexBufferLayout.h"
+#include "Renderer/VertexArray.h"
+#include "Renderer/VertexBuffer.h"
+#include "Renderer/IndexBuffer.h"
+#include "Renderer/Structures.h"
+#include "Renderer/Texture.h"
+#include "Renderer/Mesh.h"
+#include "Renderer/Renderer.h"
+
+#include "Asset/Model.h"
+
 #include <iostream>
 #include <vector>
 
@@ -18,17 +30,6 @@
 #include "stb_image.h"
 
 #include "spdlog/spdlog.h"
-
-#include "Renderer/ShaderProgram.h"
-#include "Renderer/VertexBufferLayout.h"
-#include "Renderer/VertexArray.h"
-#include "Renderer/VertexBuffer.h"
-#include "Renderer/IndexBuffer.h"
-#include "Renderer/Structures.h"
-#include "Renderer/Texture.h"
-#include "Renderer/Mesh.h"
-#include "Renderer/Renderer.h"
-
 //#define TARGET_FPS = 60;
 
 static float deltaTime = 0.0f;
@@ -124,17 +125,23 @@ int main()
         1, 2, 3};
 
 
+    Mesh mesh(vertices, indices);
+    //std::cout << mesh.getDrawBuffer().ibo.getCount() << std::endl;
     VertexArray vertexArray;
     Texture texture("../../assets/container.jpg");
     VertexBuffer vertexBuffer(vertices);
     IndexBuffer indexBuffer(indices);
+    
+    DrawBuffer db = {&vertexBuffer, &indexBuffer};
+
     Renderer renderer;
 
 
     VertexBufferLayout layout;
     layout.push<float>(3);
     layout.push<float>(2);
-    vertexArray.addBuffer(vertexBuffer, layout);
+
+    vertexArray.addBuffer(*mesh.getDrawBuffer().vbo, layout);
 
 
     glm::mat4 model = glm::mat4(1.0f);
@@ -208,7 +215,7 @@ int main()
         float normalized = (sin(timeValue)) + 0.5f;
         float normalized2 = (sin(timeValue * 5)) + 0.5f;
         shaderProgram.uploadUniform4f("color", glm::vec4(normalized2, .9, normalized, 1));
-        renderer.draw(vertexArray, indexBuffer, shaderProgram);
+        renderer.draw(vertexArray, *mesh.getDrawBuffer().ibo, shaderProgram);
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
         glBindVertexArray(0);
         processInput(window);
