@@ -2,7 +2,7 @@
 
 IndexBuffer::IndexBuffer(std::vector<unsigned int>& data)
 {
-    m_count = data.size();
+    m_count = (unsigned int)data.size();
     glGenBuffers(1, &m_bufferID);
     bind();
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * data.size(), &data[0], GL_STATIC_DRAW);

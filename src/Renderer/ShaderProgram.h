@@ -1,4 +1,3 @@
-
 #pragma once
 
 #include <iostream>
@@ -8,7 +7,7 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/type_ptr.hpp"
 
-#include "FileHandler.h"
+#include "Util/FileHandler.h"
 
 class ShaderProgram
 {

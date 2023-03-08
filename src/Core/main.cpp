@@ -6,6 +6,7 @@
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_opengl3.h"
+
 #include "glfw/glfw3.h"
 
 #ifdef APIENTRY
@@ -18,29 +19,33 @@
 
 #include "spdlog/spdlog.h"
 
-#include "ShaderProgram.h"
-#include "VertexBufferLayout.h"
-#include "VertexArray.h"
-#include "VertexBuffer.h"
-#include "IndexBuffer.h"
-#include "Structures.h"
-#include "Texture.h"
-#include "Mesh.h"
-#include "Renderer.h"
+#include "Renderer/ShaderProgram.h"
+#include "Renderer/VertexBufferLayout.h"
+#include "Renderer/VertexArray.h"
+#include "Renderer/VertexBuffer.h"
+#include "Renderer/IndexBuffer.h"
+#include "Renderer/Structures.h"
+#include "Renderer/Texture.h"
+#include "Renderer/Mesh.h"
+#include "Renderer/Renderer.h"
+
+//#define TARGET_FPS = 60;
+
+static float deltaTime = 0.0f;
+static float lastFrame = 0.0f;
+
+static float pitch = 0.0f;
+static float yaw = -90.0f;
+
+static float lastX = 400, lastY = 300;
+static bool firstMove = true;
 
 
-float deltaTime = 0.0f;
-float lastFrame = 0.0f;
-
-float pitch = 0.0f;
-float yaw = -90.0f;
-
-float lastX = 400, lastY = 300;
-bool firstMove = true;
 
 glm::vec3 cameraPosition = glm::vec3(0.0f, 0.0f, 3.0f);
 glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+
 
 void processInput(GLFWwindow *window);
 bool initializeGlfw();
@@ -85,7 +90,6 @@ int main()
 
     // Setup Dear ImGui style
     ImGui::StyleColorsDark();
-    //ImGui::StyleColorsLight();
 
     // Setup Platform/Renderer backends
     ImGui_ImplGlfw_InitForOpenGL(window, true);
@@ -132,18 +136,11 @@ int main()
     layout.push<float>(2);
     vertexArray.addBuffer(vertexBuffer, layout);
 
-    
-    // glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (const void *)0);
-    // glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (const void *)(sizeof(float) * 3));
-    // glEnableVertexAttribArray(0);
-    // glEnableVertexAttribArray(1);
-    
 
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
     glm::mat4 view = glm::mat4(1.0f);
-    // view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
 
     glm::mat4 projection;
     projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
@@ -161,20 +158,42 @@ int main()
 
     shaderProgram.uploadUniformInt("ourTexture", 0);
 
-    // Start the Dear ImGui frame
+    glfwSwapInterval(0);
 
-    bool showWindow = true;
+    bool show_another_window= true;
+    bool show_demo_window = true;
+    float clear_color[3] = {0.0f, 0.0f, 1.0f};
     while (!glfwWindowShouldClose(window))
     {    
+        glfwSwapBuffers(window);
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
-        ImGui::ShowDemoWindow(&showWindow);
+        ImGui::ShowDemoWindow(&show_demo_window);
         float currentFrame = (float)glfwGetTime();
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
+        {
+            static float f = 0.0f;
+            static int counter = 0;
 
-        glfwSwapBuffers(window);
+            ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and appendinto it.
+
+            ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
+            ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
+            ImGui::Checkbox("Another Window", &show_another_window);
+
+            ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
+            ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
+
+            if (ImGui::Button("Button"))                            // Buttons return true when clicked (most idgets return true when edited/activated)
+                counter++;
+            ImGui::SameLine();
+            ImGui::Text("counter = %d", counter);
+
+            ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+            ImGui::End();
+        }
         view = glm::lookAt(cameraPosition, cameraPosition + cameraFront, cameraUp);
 
         ImGui::Render();
@@ -229,6 +248,8 @@ void processInput(GLFWwindow *window)
 
 void mouse_callback(GLFWwindow *window, double xpos, double ypos)
 {
+
+
     if (firstMove)
     {
         lastX = (float)xpos;
