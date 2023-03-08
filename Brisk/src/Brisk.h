@@ -1,3 +1,5 @@
+//ONLY INCLUDE THIS FILE FOR APPLICATIONS
+//DO NOT INCLUDE THIS FILE ANYWHERE IN THE ENGINE
 #include "Renderer/ShaderProgram.h"
 #include "Renderer/VertexBufferLayout.h"
 #include "Renderer/VertexArray.h"
@@ -7,6 +9,7 @@
 #include "Renderer/Texture.h"
 #include "Renderer/Mesh.h"
 #include "Renderer/Renderer.h"
+
 
 #include "Asset/Model.h"
 

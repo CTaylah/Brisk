@@ -11,7 +11,7 @@ static float yaw = -90.0f;
 static float lastX = 400, lastY = 300;
 static bool firstMove = true;
 
-
+const std::string g_pathToAssets = "../../assets";
 
 glm::vec3 cameraPosition = glm::vec3(0.0f, 0.0f, 3.0f);
 glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
@@ -30,7 +30,7 @@ int main()
 
     SPDLOG_TRACE("Some trace message with param {}", 42);
 
-    const std::string pathToShaders = "..\\..\\..\\shaders\\";
+    const std::string pathToShaders = g_pathToAssets + "/shaders/";
 
     initializeGlfw();
 
@@ -98,7 +98,7 @@ int main()
     Mesh mesh(vertices, indices);
     //std::cout << mesh.getDrawBuffer().ibo.getCount() << std::endl;
     VertexArray vertexArray;
-    Texture texture("../../../assets/container.jpg");
+    Texture texture("../../assets/container.jpg");
     VertexBuffer vertexBuffer(vertices);
     IndexBuffer indexBuffer(indices);
     
