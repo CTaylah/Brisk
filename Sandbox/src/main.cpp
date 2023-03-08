@@ -1,36 +1,6 @@
-#include "Renderer/ShaderProgram.h"
-#include "Renderer/VertexBufferLayout.h"
-#include "Renderer/VertexArray.h"
-#include "Renderer/VertexBuffer.h"
-#include "Renderer/IndexBuffer.h"
-#include "Renderer/Structures.h"
-#include "Renderer/Texture.h"
-#include "Renderer/Mesh.h"
-#include "Renderer/Renderer.h"
-
-#include "Asset/Model.h"
-
 #include <iostream>
-#include <vector>
+#include "Brisk.h" 
 
-#include "glad/glad.h"
-
-#include "imgui/imgui.h"
-#include "imgui/imgui_impl_glfw.h"
-#include "imgui/imgui_impl_opengl3.h"
-
-#include "glfw/glfw3.h"
-
-#ifdef APIENTRY
-#undef APIENTRY
-#endif
-
-#include "glm/glm.hpp"
-
-#include "stb_image.h"
-
-#include "spdlog/spdlog.h"
-//#define TARGET_FPS = 60;
 
 static float deltaTime = 0.0f;
 static float lastFrame = 0.0f;
@@ -60,7 +30,7 @@ int main()
 
     SPDLOG_TRACE("Some trace message with param {}", 42);
 
-    const std::string pathToShaders = "..\\..\\shaders\\";
+    const std::string pathToShaders = "..\\..\\..\\shaders\\";
 
     initializeGlfw();
 
@@ -128,7 +98,7 @@ int main()
     Mesh mesh(vertices, indices);
     //std::cout << mesh.getDrawBuffer().ibo.getCount() << std::endl;
     VertexArray vertexArray;
-    Texture texture("../../assets/container.jpg");
+    Texture texture("../../../assets/container.jpg");
     VertexBuffer vertexBuffer(vertices);
     IndexBuffer indexBuffer(indices);
     

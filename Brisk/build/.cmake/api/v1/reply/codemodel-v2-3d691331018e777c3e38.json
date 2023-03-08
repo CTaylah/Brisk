@@ -1,0 +1,452 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1
+					],
+					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				},
+				{
+					"build" : "src",
+					"childIndexes" : 
+					[
+						2,
+						3,
+						4,
+						5
+					],
+					"jsonFile" : "directory-src-Debug-c94b7c2814d5a21df52c.json",
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "src"
+				},
+				{
+					"build" : "src/Renderer",
+					"jsonFile" : "directory-src.Renderer-Debug-3568d0afe09db5b59f70.json",
+					"parentIndex" : 1,
+					"projectIndex" : 0,
+					"source" : "src/Renderer"
+				},
+				{
+					"build" : "src/Core",
+					"jsonFile" : "directory-src.Core-Debug-d9729710ba011115df3c.json",
+					"parentIndex" : 1,
+					"projectIndex" : 0,
+					"source" : "src/Core"
+				},
+				{
+					"build" : "src/Util",
+					"jsonFile" : "directory-src.Util-Debug-03b3622a06e47583e5aa.json",
+					"parentIndex" : 1,
+					"projectIndex" : 0,
+					"source" : "src/Util"
+				},
+				{
+					"build" : "src/Asset",
+					"jsonFile" : "directory-src.Asset-Debug-a45402b9c08190d780b8.json",
+					"parentIndex" : 1,
+					"projectIndex" : 0,
+					"source" : "src/Asset"
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5
+					],
+					"name" : "Project",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "ALL_BUILD::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ALL_BUILD-Debug-4b8833b60f89da73e02f.json",
+					"name" : "ALL_BUILD",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Project::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Project-Debug-ddd23edf21fde62b07bd.json",
+					"name" : "Project",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ZERO_CHECK::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ZERO_CHECK-Debug-e3cc5ecfe2ec3148a37e.json",
+					"name" : "ZERO_CHECK",
+					"projectIndex" : 0
+				}
+			]
+		},
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1
+					],
+					"jsonFile" : "directory-.-Release-d0094a50bb2071803777.json",
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				},
+				{
+					"build" : "src",
+					"childIndexes" : 
+					[
+						2,
+						3,
+						4,
+						5
+					],
+					"jsonFile" : "directory-src-Release-c94b7c2814d5a21df52c.json",
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "src"
+				},
+				{
+					"build" : "src/Renderer",
+					"jsonFile" : "directory-src.Renderer-Release-3568d0afe09db5b59f70.json",
+					"parentIndex" : 1,
+					"projectIndex" : 0,
+					"source" : "src/Renderer"
+				},
+				{
+					"build" : "src/Core",
+					"jsonFile" : "directory-src.Core-Release-d9729710ba011115df3c.json",
+					"parentIndex" : 1,
+					"projectIndex" : 0,
+					"source" : "src/Core"
+				},
+				{
+					"build" : "src/Util",
+					"jsonFile" : "directory-src.Util-Release-03b3622a06e47583e5aa.json",
+					"parentIndex" : 1,
+					"projectIndex" : 0,
+					"source" : "src/Util"
+				},
+				{
+					"build" : "src/Asset",
+					"jsonFile" : "directory-src.Asset-Release-a45402b9c08190d780b8.json",
+					"parentIndex" : 1,
+					"projectIndex" : 0,
+					"source" : "src/Asset"
+				}
+			],
+			"name" : "Release",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5
+					],
+					"name" : "Project",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "ALL_BUILD::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ALL_BUILD-Release-4b8833b60f89da73e02f.json",
+					"name" : "ALL_BUILD",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Project::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Project-Release-1a1eecaa3a0d43f58dbd.json",
+					"name" : "Project",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ZERO_CHECK::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ZERO_CHECK-Release-e3cc5ecfe2ec3148a37e.json",
+					"name" : "ZERO_CHECK",
+					"projectIndex" : 0
+				}
+			]
+		},
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1
+					],
+					"jsonFile" : "directory-.-MinSizeRel-d0094a50bb2071803777.json",
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				},
+				{
+					"build" : "src",
+					"childIndexes" : 
+					[
+						2,
+						3,
+						4,
+						5
+					],
+					"jsonFile" : "directory-src-MinSizeRel-c94b7c2814d5a21df52c.json",
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "src"
+				},
+				{
+					"build" : "src/Renderer",
+					"jsonFile" : "directory-src.Renderer-MinSizeRel-3568d0afe09db5b59f70.json",
+					"parentIndex" : 1,
+					"projectIndex" : 0,
+					"source" : "src/Renderer"
+				},
+				{
+					"build" : "src/Core",
+					"jsonFile" : "directory-src.Core-MinSizeRel-d9729710ba011115df3c.json",
+					"parentIndex" : 1,
+					"projectIndex" : 0,
+					"source" : "src/Core"
+				},
+				{
+					"build" : "src/Util",
+					"jsonFile" : "directory-src.Util-MinSizeRel-03b3622a06e47583e5aa.json",
+					"parentIndex" : 1,
+					"projectIndex" : 0,
+					"source" : "src/Util"
+				},
+				{
+					"build" : "src/Asset",
+					"jsonFile" : "directory-src.Asset-MinSizeRel-a45402b9c08190d780b8.json",
+					"parentIndex" : 1,
+					"projectIndex" : 0,
+					"source" : "src/Asset"
+				}
+			],
+			"name" : "MinSizeRel",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5
+					],
+					"name" : "Project",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "ALL_BUILD::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ALL_BUILD-MinSizeRel-4b8833b60f89da73e02f.json",
+					"name" : "ALL_BUILD",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Project::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Project-MinSizeRel-956d1b69d7ff364558f6.json",
+					"name" : "Project",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ZERO_CHECK::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ZERO_CHECK-MinSizeRel-e3cc5ecfe2ec3148a37e.json",
+					"name" : "ZERO_CHECK",
+					"projectIndex" : 0
+				}
+			]
+		},
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1
+					],
+					"jsonFile" : "directory-.-RelWithDebInfo-d0094a50bb2071803777.json",
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				},
+				{
+					"build" : "src",
+					"childIndexes" : 
+					[
+						2,
+						3,
+						4,
+						5
+					],
+					"jsonFile" : "directory-src-RelWithDebInfo-c94b7c2814d5a21df52c.json",
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "src"
+				},
+				{
+					"build" : "src/Renderer",
+					"jsonFile" : "directory-src.Renderer-RelWithDebInfo-3568d0afe09db5b59f70.json",
+					"parentIndex" : 1,
+					"projectIndex" : 0,
+					"source" : "src/Renderer"
+				},
+				{
+					"build" : "src/Core",
+					"jsonFile" : "directory-src.Core-RelWithDebInfo-d9729710ba011115df3c.json",
+					"parentIndex" : 1,
+					"projectIndex" : 0,
+					"source" : "src/Core"
+				},
+				{
+					"build" : "src/Util",
+					"jsonFile" : "directory-src.Util-RelWithDebInfo-03b3622a06e47583e5aa.json",
+					"parentIndex" : 1,
+					"projectIndex" : 0,
+					"source" : "src/Util"
+				},
+				{
+					"build" : "src/Asset",
+					"jsonFile" : "directory-src.Asset-RelWithDebInfo-a45402b9c08190d780b8.json",
+					"parentIndex" : 1,
+					"projectIndex" : 0,
+					"source" : "src/Asset"
+				}
+			],
+			"name" : "RelWithDebInfo",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5
+					],
+					"name" : "Project",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "ALL_BUILD::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ALL_BUILD-RelWithDebInfo-4b8833b60f89da73e02f.json",
+					"name" : "ALL_BUILD",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Project::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Project-RelWithDebInfo-60e0b6e55d95654fc6e0.json",
+					"name" : "Project",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ZERO_CHECK::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ZERO_CHECK-RelWithDebInfo-e3cc5ecfe2ec3148a37e.json",
+					"name" : "ZERO_CHECK",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/dev/Brisk/Brisk/build",
+		"source" : "C:/dev/Brisk/Brisk"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 4
+	}
+}
