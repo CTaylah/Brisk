@@ -6,7 +6,7 @@ VertexBuffer::VertexBuffer(std::vector<float> *vertices)
     glGenBuffers(1, &m_bufferID);
     bind();
     std::cout << sizeof(vertices) << std::endl;
-    glBufferData(GL_ARRAY_BUFFER, 32, *vertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, 32, &(vertices[0]), GL_STATIC_DRAW);
 }
 
 void VertexBuffer::subData()
