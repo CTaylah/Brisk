@@ -88,8 +88,10 @@ int main()
     vert4.position = glm::vec3(-0.5f, 0.5f, 0.0f);
     vert4.textureCoordinates = glm::vec2(0.0f, 1.0f);
 
+    Cube cube;
+    std::vector<Vertex> cubev = {cube.vert1, cube.vert2, cube.vert3, cube.vert4, cube.vert5,cube.vert6,cube.vert7,cube.vert8};
     std::vector<Vertex> vertices = {vert1, vert2, vert3, vert4};
-
+    
     std::vector<unsigned int> indices = {
         0, 1, 3,
         1, 2, 3};
