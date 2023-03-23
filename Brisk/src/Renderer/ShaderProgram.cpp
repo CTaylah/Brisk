@@ -1,5 +1,5 @@
 #include "ShaderProgram.h"
-#include "Log.h"
+#include "Core/Log.h"
 
 namespace Brisk{
 
