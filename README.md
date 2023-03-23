@@ -1,6 +1,6 @@
 # Brisk
 
-Currently, the build system is only configured for linux. 
+Currently, the build system is only configured for Linux. 
 
 Brisk uses glfw, and in order for glfw to work on Linux, you need to install some dependencies
 
