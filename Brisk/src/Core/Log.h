@@ -6,18 +6,20 @@
 #include <memory>
 namespace Brisk
 {
+
     class Log
     {
     public:
-        Log();
+        static void init();
 
-       std::shared_ptr<spdlog::logger>& getCoreLogger() {return s_coreLogger;} 
-       std::shared_ptr<spdlog::logger>& getClientLogger() {return s_clientLogger;} 
+       static std::shared_ptr<spdlog::logger>& getCoreLogger() {return s_coreLogger;} 
+       static std::shared_ptr<spdlog::logger>& getClientLogger() {return s_clientLogger;} 
 
     private:
-        std::shared_ptr<spdlog::logger> s_coreLogger; 
-        std::shared_ptr<spdlog::logger> s_clientLogger; 
+        static std::shared_ptr<spdlog::logger> s_coreLogger; 
+        static std::shared_ptr<spdlog::logger> s_clientLogger; 
 
     };
+
     
 } 

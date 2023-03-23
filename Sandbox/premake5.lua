@@ -9,11 +9,30 @@ project "Sandbox"
 
     includedirs 
     {
-        "%{wks.location}/Brisk/include/"
+        "%{wks.location}/Brisk/include/",
+        "%{wks.location}/Brisk/include/glad/",
+        "%{wks.location}/Brisk/include/glfw/"
 
     }
 
     files { "**.h", "**.hpp", "**.c", "**.cpp"}
     
-    links {"Brisk"}
+
+    links {
+        "Brisk", 
+        --glfw and its dependencies
+        "glfw3", "GL", "X11", "Xrandr", "pthread", "Xi",
+        "spdlog",
+    
+    }
+
+    filter "configurations:Debug"
+        defines { "DEBUG" }
+        symbols "On"
+    
+    filter "configurations:Release"
+        defines { "NDEBUG" }
+        optimize "On"
+
+
 

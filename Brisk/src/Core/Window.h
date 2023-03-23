@@ -1,7 +1,9 @@
 #pragma once
 
+#include "glad/glad.h"
+#include "GLFW/glfw3.h"
 #include <string>
-//Interface for creating Windows. Needs to be implemented per-platform
+
 namespace Brisk
 {
     struct WindowProperties
@@ -9,24 +11,32 @@ namespace Brisk
         std::string title = "Brisk Engine";
         unsigned int width = 1280;
         unsigned int height = 720;
-        bool isVsync;
+        bool isVsync = false;
     };
 
     class Window
     {
-        public:
-        virtual ~Window();
-        virtual unsigned int getWidth() const = 0;
-        virtual unsigned int getHeight() const = 0;
+
+    public:
+        Window();
+        ~Window() = default;
+        unsigned int getWidth() { return m_properties.width; }
+        unsigned int getHeight() { return m_properties.height; }
+
+        void swapBuffers();
+
+        void onUpdate();
         
-        //virtual void setEventcallback(const EventCallbackFn& callback) = 0
-        virtual void setVysnc (bool vysnch) = 0;
-        virtual bool isVysnc() const = 0;
+        //void setEventcallback(const EventCallbackFn& callback) = 0
+        void setVysnc (bool vysnch) {};
+        bool isVysnc() { return m_properties.isVsync; }
+        GLFWwindow* getGlfwWindow() { return m_window; }
 
-        static Window* createWindow(const WindowProperties& windowProperteries);
-
+    private:
+        GLFWwindow* m_window;
+        WindowProperties m_properties;
     };
 
 
     
-} // namespace Brisk
+} 
