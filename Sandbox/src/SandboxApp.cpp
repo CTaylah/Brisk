@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+
+
 class Sandbox : public Brisk::Application
 {
 public:
@@ -57,15 +59,46 @@ public:
         Brisk::ShaderProgram shaderProgram(vertexShaderSource, fragmentShaderSource);
         int a = 6;
 
-        Brisk::Log::getClientLogger()->info(a);
-        std::cout << fragmentShaderSource << std::endl;
+        Brisk::Log::warn(a);
 
+        Brisk::EventHandler::getEventList()->push_back(Brisk::KeyboardEvent(5));
+
+
+        Brisk::PerspectiveCamera camera(1280.0f, 720.0f);
         while(!glfwWindowShouldClose(m_window->getGlfwWindow()))
         { 
+
+
             m_window->onUpdate();    
             m_renderer.clear();
+
+            glm::mat4 model = glm::mat4(1.0f);
+            model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+
+            glm::mat4 view = glm::mat4(1.0f);
+            view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+
+            glm::mat4 projection = glm::perspective(glm::radians(45.0f), 1280.0f / 720.0f, 0.1f, 100.0f);
+//            glm::mat4 projection = glm::ortho(0.0f, 1280.0f, 0.0f, 720.0f, 0.1f, 100.0f);
+
+            shaderProgram.UploadUniformMat4("model", model);
+            shaderProgram.UploadUniformMat4("projection_view", camera.getProjectionView());
+
+
             m_renderer.draw(vertexArray, indexBuffer, shaderProgram);
+
+            
+
             glBindVertexArray(0);
+            if(Brisk::EventHandler::getEventList()->size() == 0)
+                continue;
+
+
+            if(!glfwWindowShouldClose(m_window->getGlfwWindow()))
+            {
+                Brisk::EventHandler::getEventList()->clear();
+                Brisk::EventHandler::getEventList()->shrink_to_fit();
+            }
         } 
     }
 
@@ -74,9 +107,10 @@ public:
 int main()
 {
     Brisk::Log::init();
+    Brisk::EventHandler::init();
     Brisk::WindowProperties props;
     Sandbox* sandbox = new Sandbox();
     sandbox->run();
+    int c = Brisk::EventHandler::getEventList()->at(0).getEventType();
     delete(sandbox);
     return 0;
-}

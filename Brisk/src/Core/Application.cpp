@@ -13,7 +13,7 @@ namespace Brisk{
 
         if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
         {
-            logger.getCoreLogger()->error("GLAD failed to initialize");
+            Log::getCoreLogger()->error("GLAD failed to initialize");
         }
 
 
@@ -36,10 +36,11 @@ namespace Brisk{
         int success = glfwInit();
         if(GLFW_FALSE == success)
         {
-            logger.getCoreLogger()->error("GLFW failed to initialize");
+            Log::getCoreLogger()->error("GLFW failed to initialize");
             glfwTerminate();
             return;
         }
+
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);

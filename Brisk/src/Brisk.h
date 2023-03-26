@@ -6,6 +6,8 @@
 */
 
 
+#include "Event/Event.h"
+
 #include "Core/Application.h"
 #include "Core/Log.h"
 #include "Core/Window.h"
@@ -19,6 +21,12 @@
 #include "Renderer/Texture.h"
 #include "Renderer/Renderer.h"
 
+#include "Renderer/PerspectiveCamera.h"
+
 #include "Util/FileHandler.h"
 
 #include "GLFW/glfw3.h"
+
+#include "glm/glm.hpp"
+
+#include <vector>

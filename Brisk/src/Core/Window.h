@@ -1,11 +1,17 @@
 #pragma once
 
+#include "Event/Event.h"
+#include "Event/KeyboardEvent.h"
+#include "Event/MouseEvent.h"
+
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
 #include <string>
+#include <vector>
 
 namespace Brisk
 {
+
     struct WindowProperties
     {
         std::string title = "Brisk Engine";
@@ -19,6 +25,7 @@ namespace Brisk
 
     public:
         Window();
+
         ~Window() = default;
         unsigned int getWidth() { return m_properties.width; }
         unsigned int getHeight() { return m_properties.height; }
@@ -35,6 +42,11 @@ namespace Brisk
     private:
         GLFWwindow* m_window;
         WindowProperties m_properties;
+
+        std::vector<Event> m_eventList;
+
+        void onEvent();
+    
     };
 
 

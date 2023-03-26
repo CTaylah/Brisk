@@ -2,13 +2,19 @@
 
 #include "Log.h"
 #include "Window.h"
+
+#include "Event/Event.h"
 #include "Renderer/Renderer.h"
 
 #include "glad/glad.h"
 #include  "GLFW/glfw3.h"
 
+#include <vector>
+
+
 namespace Brisk
 {
+
         
     class Application
     {
@@ -23,8 +29,8 @@ namespace Brisk
             void initializeGlfw();
 
 
+
         protected:
-            Brisk::Log logger;
             Window* m_window;
             Renderer m_renderer;
     };
