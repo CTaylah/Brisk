@@ -28,13 +28,13 @@ namespace Brisk{
         if (!success)
         {
             glGetShaderInfoLog(vertexShaderID, 512, NULL, infoLog);
-            Log::getCoreLogger()->error("ShadedProgram: Error, Vertex Shader Compilation failed");
+            Log::error("ShadedProgram: Error, Vertex Shader Compilation failed");
             std::string log;
             for (int i = 0; i < 512; i++)
             {
                 log = log + infoLog[i];
             }
-            Log::getCoreLogger()->info(log);
+            Log::info(log);
         }
 
         // Compile the fragment shader
@@ -47,7 +47,7 @@ namespace Brisk{
         if (!success)
         {
             glGetShaderInfoLog(fragmentShaderID, 512, NULL, infoLog);
-            Log::getCoreLogger()->error("ShaderProgram: Error, Fragment Shader Compilation failed");
+            Log::error("ShaderProgram: Error, Fragment Shader Compilation failed");
         }
 
         // Attach shaders to shader program
@@ -62,7 +62,7 @@ namespace Brisk{
         if (!success)
         {
             glGetShaderInfoLog(fragmentShaderID, 512, NULL, infoLog);
-            Log::getCoreLogger()->error("ShaderProgram: Error, Shader Program Linking failed");
+            Log::error("ShaderProgram: Error, Shader Program Linking failed");
         }
 
         glDeleteShader(vertexShaderID);

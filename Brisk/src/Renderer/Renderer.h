@@ -10,8 +10,11 @@ namespace Brisk {
     {
     public:
         //void set clear color
-        void draw(VertexArray& va, IndexBuffer& ib, ShaderProgram& sh) const;
+        void drawIndexed(VertexArray& va, IndexBuffer& ib, ShaderProgram& sh) const;
+        void drawTriangles(VertexArray& va, ShaderProgram& sh, unsigned int verticeCount) const;
+
         void clear() const;
+        void setClearColor(float r, float g, float b, float a);
     private:
     };
 

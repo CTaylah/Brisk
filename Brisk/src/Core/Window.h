@@ -33,6 +33,8 @@ namespace Brisk
         void swapBuffers();
 
         void onUpdate();
+
+        void setCursorVisibility(bool cursorVisibile);
         
         //void setEventcallback(const EventCallbackFn& callback) = 0
         void setVysnc (bool vysnch) {};

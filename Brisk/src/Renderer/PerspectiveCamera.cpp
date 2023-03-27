@@ -10,6 +10,8 @@ namespace Brisk{
 
         m_projectionMatrix = glm::perspective(glm::radians(45.0f), screenWidth / screenHeight, 0.1f, 100.0f);
 
+        m_lastX = screenWidth / 2;
+        m_lastY = screenHeight / 2;
 
         m_screenWidth = screenWidth;
         m_screenHeight = screenHeight;
@@ -26,6 +28,8 @@ namespace Brisk{
         glm::vec3 cameraRight = glm::normalize(glm::cross(m_worldUp, cameraDirection));
 
         m_cameraUp = glm::cross(cameraDirection, cameraRight);
+
+        updateView();
     }
 
 
@@ -38,7 +42,7 @@ namespace Brisk{
         }
 
         double xoffset = xPosition - m_lastX;
-        double yoffset = yPosition - m_lastY;
+        double yoffset = m_lastY - yPosition;
 
         m_lastX = xPosition;
         m_lastY = yPosition;
@@ -64,6 +68,9 @@ namespace Brisk{
         direction.z = sin(glm::radians(m_yaw)) * cos(glm::radians(m_pitch));
 
         m_cameraFront = glm::normalize(direction);
+
+        m_firstMove = false;
+        updateView();
     }
     
     void PerspectiveCamera::updateView()
@@ -71,9 +78,39 @@ namespace Brisk{
         m_viewMatrix = glm::lookAt(m_cameraPosition, m_cameraPosition + m_cameraFront, m_cameraUp);  
     }
 
+    glm::vec3* PerspectiveCamera::getCameraPosition()
+    {
+        return &m_cameraPosition;
+    }
+
+    const glm::vec3& PerspectiveCamera::getCameraUp()
+    {
+        return m_cameraUp;
+
+    }
+    
+    const glm::vec3& PerspectiveCamera::getCameraFront()
+    {
+        return m_cameraFront;
+    }
+
+
+
     glm::mat4 PerspectiveCamera::getProjectionView() const
     {
         return m_projectionMatrix * m_viewMatrix;
     }
+
+    glm::mat4 PerspectiveCamera::getView() const
+    {
+        return m_viewMatrix;
+    }
+
+    glm::mat4 PerspectiveCamera::getProjection() const
+    {
+        return m_projectionMatrix;
+    }
+
+
 
 }

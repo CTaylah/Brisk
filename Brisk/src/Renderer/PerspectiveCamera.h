@@ -9,9 +9,18 @@ namespace Brisk{
 
     public:
         PerspectiveCamera(float screenWidth, float screenHeight); 
-        void lookAt(double xPosition, double yPosition);
-        glm::mat4 getProjectionView() const;
 
+        glm::mat4 getProjectionView() const;
+        glm::mat4 getView() const;
+        glm::mat4 getProjection() const;
+
+        glm::vec3* getCameraPosition();
+        const glm::vec3& getCameraUp();
+        const glm::vec3& getCameraFront();
+
+        void lookAt(double xPosition, double yPosition);
+
+        void updateView();
     private:
         glm::mat4 m_viewMatrix;
         glm::mat4 m_projectionMatrix;
@@ -31,8 +40,6 @@ namespace Brisk{
 
         double  m_sensitivity = 0.035f;
     
-    private:
-        void updateView();
     };
 
 }

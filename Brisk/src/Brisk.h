@@ -21,7 +21,7 @@
 #include "Renderer/Texture.h"
 #include "Renderer/Renderer.h"
 
-#include "Renderer/PerspectiveCamera.h"
+#include "Renderer/PerspectiveCameraController.h"
 
 #include "Util/FileHandler.h"
 

@@ -2,7 +2,7 @@
 
 namespace Brisk {
 
-    void Renderer::draw(VertexArray& va, IndexBuffer& ib, ShaderProgram& sh) const 
+    void Renderer::drawIndexed(VertexArray& va, IndexBuffer& ib, ShaderProgram& sh) const 
     {
         sh.use();
         va.bind();
@@ -11,12 +11,23 @@ namespace Brisk {
 
     }
 
+    void Renderer::drawTriangles(VertexArray& va, ShaderProgram& sh, unsigned int verticeCount) const
+    {
+        sh.use();
+        va.bind();
+        glDrawArrays(GL_TRIANGLES, 0, verticeCount);
+    }
+
     void Renderer::clear() const
     {
         
-        glClearColor(0.5f, 0.1f, 0.4f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    }
+
+    void Renderer::setClearColor(float r, float g, float b, float a)
+    {
+        glClearColor(r,g,b,a);
     }
 
 }

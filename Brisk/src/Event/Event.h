@@ -16,12 +16,14 @@ namespace Brisk
         public:
 
             EventType getEventType() { return m_type; }
+            void setHandled(bool handled) {m_handled = handled;}
 
             virtual ~Event()
             { }
 
         protected:
             EventType m_type;
+            bool m_handled = false;
     };
 
     class EventHandler
@@ -33,10 +35,10 @@ namespace Brisk
             static void pushBack();
             static void pop();
 
-            static std::shared_ptr<std::vector<Event>>& getEventList() {return s_eventList;}
+            static std::shared_ptr<std::vector<Event*>>& getEventList() {return s_eventList;}
 
         private:
-            static std::shared_ptr<std::vector<Event>> s_eventList;
+            static std::shared_ptr<std::vector<Event*>> s_eventList;
 
     };
 

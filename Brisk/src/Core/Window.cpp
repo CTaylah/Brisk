@@ -8,20 +8,13 @@ namespace Brisk
 
     void keyCallback (GLFWwindow* window, int key, int scancode, int action, int mods)
     {
-        if(key == GLFW_KEY_E && action == GLFW_PRESS)
-        {
-           EventHandler::getEventList()->push_back(KeyboardEvent(GLFW_KEY_E));
-           int x = EventHandler::getEventList()->at(0).getEventType();
-            Log::warn(x);
-        }
+        EventHandler::getEventList()->push_back(new KeyboardEvent(key));
     }
 
   
     void mouseCallback(GLFWwindow* window, double xpos, double ypos)
     {
-        EventHandler::getEventList()->push_back(MouseEvent(xpos, ypos));
-        Log::warn(xpos);
-
+        EventHandler::getEventList()->push_back(new MouseEvent(xpos, ypos));
     }
 
     Window::Window()
@@ -49,6 +42,16 @@ namespace Brisk
     {
         glfwSwapBuffers(m_window);
         glfwPollEvents();
+    }
+
+
+    void Window::setCursorVisibility(bool cursorVisibile)
+    {
+        if(cursorVisibile)
+            glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL); 
+        
+        else
+            glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     }
 
 } 
