@@ -10,7 +10,7 @@
 
 #include "Core/Application.h"
 #include "Core/Log.h"
-#include "Core/Window.h"
+#include "Core/Input.h"
 
 #include "Renderer/Vertex.h"
 #include "Renderer/VertexBufferLayout.h"

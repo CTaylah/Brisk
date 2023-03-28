@@ -114,7 +114,6 @@ std::vector<float> vertices = {
 
         m_window->setCursorVisibility(false);
         
-        //Brisk::PerspectiveCamera camera(1280.0f, 720.0f);
         Brisk::PerspectiveCameraController camController(1280, 720);
         camController.setCameraSpeed(1.8f);
         double lastFrame = 0.0;
@@ -131,7 +130,6 @@ std::vector<float> vertices = {
 
         Brisk::ShaderProgram lightProgram(vertexShaderSource, lightShaderSource);
 
-
         m_renderer.setClearColor(0.1f, 0.2f, 0.1f, 1.0f);
         while(!glfwWindowShouldClose(m_window->getGlfwWindow()))
         {
@@ -143,6 +141,33 @@ std::vector<float> vertices = {
 
             if(glfwWindowShouldClose(m_window->getGlfwWindow()))
                 break;
+
+
+            if(Brisk::Input::isKeyPressed(BRISK_KEY_W))
+            {
+                camController.moveCamera(Brisk::BR_FORWARD, deltaTime);
+            }
+
+            if(Brisk::Input::isKeyPressed(BRISK_KEY_A))
+            {
+                camController.moveCamera(Brisk::BR_LEFT, deltaTime);
+            }
+            if(Brisk::Input::isKeyPressed(BRISK_KEY_S))
+            {
+                camController.moveCamera(Brisk::BR_BACKWARD, deltaTime);
+            }
+
+            if(Brisk::Input::isKeyPressed(BRISK_KEY_D))
+            {
+                camController.moveCamera(Brisk::BR_RIGHT, deltaTime);
+            }
+
+            if(Brisk::Input::isKeyPressed(BRISK_KEY_ESCAPE))
+            {
+                exit(0);
+            }
+                       
+                       
 
             for(int i = 0; i < eventList->size(); i++)
             {
@@ -156,34 +181,18 @@ std::vector<float> vertices = {
                     camController.getCamera()->lookAt(xpos, ypos);
                 }
 
-                if(event->getEventType() == Brisk::BR_KEY_PRESSED)
-                {
-                    Brisk::KeyboardEvent* keyEvent = static_cast<Brisk::KeyboardEvent*>(event);
-                    if(keyEvent->getKey() == GLFW_KEY_ESCAPE)
-                    {
-                        glfwSetWindowShouldClose(m_window->getGlfwWindow(), true);
-                        exit(0);
-                    }
-
-                    if(keyEvent->getKey() == GLFW_KEY_W)
-                        camController.moveCamera(Brisk::BR_FORWARD, deltaTime);
-
-                    if(keyEvent->getKey() == GLFW_KEY_S)
-                        camController.moveCamera(Brisk::BR_BACKWARD, deltaTime);
-
-                    if(keyEvent->getKey() == GLFW_KEY_A)
-                        camController.moveCamera(Brisk::BR_LEFT, deltaTime);
-
-                    if(keyEvent->getKey() == GLFW_KEY_D)
-                        camController.moveCamera(Brisk::BR_RIGHT, deltaTime);
-
-                }
+                
             }             
 
             
             m_renderer.clear();
 
+            glm::mat4 transform = glm::mat4(1.0f);
+            transform = glm::translate(transform, glm::vec3(sin(glfwGetTime() * 5), cos(glfwGetTime()) * 3, 0.0f));
+            glm::mat4 transform2 = glm::mat4(1.0f);
+
             shaderProgram.use();
+            shaderProgram.UploadUniformMat4("transform", transform);
             shaderProgram.UploadUniformMat4("model", model);
             shaderProgram.UploadUniformMat4("view", camController.getCamera()->getView());
             shaderProgram.UploadUniformMat4("projection", camController.getCamera()->getProjection());
@@ -193,6 +202,7 @@ std::vector<float> vertices = {
             
 
             lightProgram.use();
+            shaderProgram.UploadUniformMat4("transform", transform2);
             lightProgram.UploadUniformMat4("model", lightModel);
             lightProgram.UploadUniformMat4("view", camController.getCamera()->getView());
             lightProgram.UploadUniformMat4("projection", camController.getCamera()->getProjection());
@@ -219,7 +229,7 @@ int main()
 {
     Brisk::Log::init();
     Brisk::EventHandler::init();
-
+    
     Sandbox* sandbox = new Sandbox();
     sandbox->run();
     delete(sandbox);

@@ -1,5 +1,5 @@
 
-
+#include "Input.h"
 #include "Application.h"
 
 namespace Brisk{
@@ -9,6 +9,7 @@ namespace Brisk{
         initializeGlfw();
 
         m_window = new Window();
+        Input::setWindow(m_window);    
 
 
         if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
