@@ -10,6 +10,7 @@ namespace Brisk{
     {
     public:
         IndexBuffer(std::vector<unsigned int>& data);
+        IndexBuffer(unsigned int* data, unsigned int size);
         IndexBuffer() = default;
         unsigned int getCount();
         void bind();

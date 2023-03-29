@@ -32,7 +32,7 @@ namespace Brisk{
         updateView();
     }
 
-
+    //This function should probably be moved to the camera controller class
     void PerspectiveCamera::lookAt(double xPosition, double yPosition)
     {
         if(m_firstMove)
