@@ -9,7 +9,6 @@ namespace Brisk {
     class Renderer
     {
     public:
-        //void set clear color
         void drawIndexed(VertexArray& va, IndexBuffer& ib, ShaderProgram& sh) const;
         void drawTriangles(VertexArray& va, ShaderProgram& sh, unsigned int verticeCount) const;
 

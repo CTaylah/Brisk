@@ -11,11 +11,11 @@ namespace Brisk {
 
     }
 
-    void Renderer::drawTriangles(VertexArray& va, ShaderProgram& sh, unsigned int verticeCount) const
+    void Renderer::drawTriangles(VertexArray& va, ShaderProgram& sh, unsigned int vertexCount) const
     {
         sh.use();
         va.bind();
-        glDrawArrays(GL_TRIANGLES, 0, verticeCount);
+        glDrawArrays(GL_TRIANGLES, 0, vertexCount);
     }
 
     void Renderer::clear() const

@@ -19,6 +19,7 @@ namespace Brisk{
         void moveCamera(Direction direction);
         void moveCamera(Direction direction, float deltaTime);
         void setCameraSpeed(float cameraSpeed){  m_cameraSpeed = cameraSpeed; }
+        void setSensitivty(double sensitivity){ m_camera.setSensitivity(sensitivity); }
 
     private:
         PerspectiveCamera m_camera;

@@ -48,13 +48,18 @@ namespace Brisk{
         {
             glGetShaderInfoLog(fragmentShaderID, 512, NULL, infoLog);
             Log::error("ShaderProgram: Error, Fragment Shader Compilation failed");
+            std::string log;
+            for (int i = 0; i < 512; i++)
+            {
+                log = log + infoLog[i];
+            }
+            Log::info(log);
         }
 
         // Attach shaders to shader program
         glAttachShader(m_programID, vertexShaderID);
         glAttachShader(m_programID, fragmentShaderID);
 
-        // TODO: Error  logging
         glLinkProgram(m_programID);
         glGetProgramiv(m_programID, GL_LINK_STATUS, &success);
 
@@ -63,6 +68,14 @@ namespace Brisk{
         {
             glGetShaderInfoLog(fragmentShaderID, 512, NULL, infoLog);
             Log::error("ShaderProgram: Error, Shader Program Linking failed");
+
+            std::string log;
+            for (int i = 0; i < 512; i++)
+            {
+                log = log + infoLog[i];
+            }
+            Log::info(log);
+                        
         }
 
         glDeleteShader(vertexShaderID);
@@ -105,13 +118,13 @@ namespace Brisk{
         glUniform1i(location, value);
     }
 
-    void ShaderProgram::UploadUniformMat3(const std::string &name, const glm::mat3 &matrix)
+    void ShaderProgram::uploadUniformMat3(const std::string &name, const glm::mat3 &matrix)
     {
         GLint location = glGetUniformLocation(m_programID, name.c_str());
         glUniformMatrix3fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
     }
 
-    void ShaderProgram::UploadUniformMat4(const std::string &name, const glm::mat4 &matrix)
+    void ShaderProgram::uploadUniformMat4(const std::string &name, const glm::mat4 &matrix)
     {
         GLint location = glGetUniformLocation(m_programID, name.c_str());
         glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));

@@ -18,8 +18,9 @@ namespace Brisk{
         const glm::vec3& getCameraUp();
         const glm::vec3& getCameraFront();
 
+        void setSensitivity(double sensitivity) { m_sensitivity = sensitivity;};
         void lookAt(double xPosition, double yPosition);
-
+         
         void updateView();
     private:
         glm::mat4 m_viewMatrix;
@@ -38,7 +39,7 @@ namespace Brisk{
         double m_pitch = 0.0;
         double m_yaw = -90.0;
 
-        double  m_sensitivity = 0.035f;
+        double  m_sensitivity = 0.035;
     
     };
 

@@ -1,13 +1,11 @@
-
 #pragma once
 
-#include <vector>
 
 #include "glm/glm.hpp"
-
 
 struct Vertex
 {
     glm::vec3 position;
+    glm::vec3 normals;
     glm::vec2 textureCoordinates;
 };

@@ -115,8 +115,9 @@ std::vector<float> vertices = {
         m_window->setCursorVisibility(false);
         
         Brisk::PerspectiveCameraController camController(1280, 720);
-        camController.setCameraSpeed(1.8f);
-        double lastFrame = 0.0;
+        camController.setCameraSpeed(2.6f);
+        camController.setSensitivty(.05);
+
         auto eventList = Brisk::EventHandler::getEventList();
 
 
@@ -130,6 +131,10 @@ std::vector<float> vertices = {
 
         Brisk::ShaderProgram lightProgram(vertexShaderSource, lightShaderSource);
 
+        double lastFrame = 0.0;
+
+        glm::mat4 transform2 = glm::mat4(1.0f);
+        
         m_renderer.setClearColor(0.1f, 0.2f, 0.1f, 1.0f);
         while(!glfwWindowShouldClose(m_window->getGlfwWindow()))
         {
@@ -188,24 +193,23 @@ std::vector<float> vertices = {
             m_renderer.clear();
 
             glm::mat4 transform = glm::mat4(1.0f);
-            transform = glm::translate(transform, glm::vec3(sin(glfwGetTime() * 5), cos(glfwGetTime()) * 3, 0.0f));
-            glm::mat4 transform2 = glm::mat4(1.0f);
+            transform = glm::translate(transform, glm::vec3(sin(glfwGetTime() * 3), cos(glfwGetTime()) * 3, -1.0f));
 
             shaderProgram.use();
-            shaderProgram.UploadUniformMat4("transform", transform);
-            shaderProgram.UploadUniformMat4("model", model);
-            shaderProgram.UploadUniformMat4("view", camController.getCamera()->getView());
-            shaderProgram.UploadUniformMat4("projection", camController.getCamera()->getProjection());
+            shaderProgram.uploadUniformMat4("transform", transform);
+            shaderProgram.uploadUniformMat4("model", model);
+            shaderProgram.uploadUniformMat4("view", camController.getCamera()->getView());
+            shaderProgram.uploadUniformMat4("projection", camController.getCamera()->getProjection());
             shaderProgram.uploadUniform3f("lightColor", lightColor);
             shaderProgram.uploadUniform3f("objectColor", toyColor);
             shaderProgram.uploadUniform3f("lightPosition", lightPosition);
             
 
             lightProgram.use();
-            shaderProgram.UploadUniformMat4("transform", transform2);
-            lightProgram.UploadUniformMat4("model", lightModel);
-            lightProgram.UploadUniformMat4("view", camController.getCamera()->getView());
-            lightProgram.UploadUniformMat4("projection", camController.getCamera()->getProjection());
+            lightProgram.uploadUniformMat4("transform", transform2);
+            lightProgram.uploadUniformMat4("model", lightModel);
+            lightProgram.uploadUniformMat4("view", camController.getCamera()->getView());
+            lightProgram.uploadUniformMat4("projection", camController.getCamera()->getProjection());
             lightProgram.uploadUniform3f("lightColor", lightColor);
 
 //            m_renderer.drawIndexed(vertexArray, indexBuffer, shaderProgram);
