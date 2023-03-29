@@ -19,11 +19,7 @@ project "Sandbox"
     
 
     links {
-        "Brisk", 
-        --glfw and its dependencies
-        "glfw3", "GL", "X11", "Xrandr", "pthread", "Xi",
-        "spdlog",
-    
+        "Brisk"
     }
 
     filter "configurations:Debug"

@@ -11,6 +11,10 @@ project "Brisk"
                  "src"    
                 }
 
+    links{
+        "spdlogd", "glfw3"
+    }
+
     files {
         "src/**.cpp",
         "src/**.h",
@@ -18,12 +22,6 @@ project "Brisk"
         "vendor/glad/glad.c"
         }
 
-    links {
-        --glfw and its dependencies
-        "glfw3", "GL", "X11", "Xrandr", "pthread", "Xi",
-        "spdlog"
-    
-    }
 
     filter "configurations:Debug"
         defines { "DEBUG" }
