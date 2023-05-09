@@ -18,6 +18,7 @@ void main()
 {
     gl_Position = projection * view * model * transform * vec4(aPos, 1.0);
     FragPos = vec3(model * transform * vec4(aPos, 1.0));
-    Normal = aNormal;
+    //TODO: Move to CPU side
+    Normal = mat3(transpose(inverse(model))) * aNormal;
     
 }

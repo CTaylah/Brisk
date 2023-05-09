@@ -78,9 +78,9 @@ namespace Brisk{
         m_viewMatrix = glm::lookAt(m_cameraPosition, m_cameraPosition + m_cameraFront, m_cameraUp);  
     }
 
-    glm::vec3* PerspectiveCamera::getCameraPosition()
+    glm::vec3& PerspectiveCamera::getCameraPosition()
     {
-        return &m_cameraPosition;
+        return m_cameraPosition;
     }
 
     const glm::vec3& PerspectiveCamera::getCameraUp()
@@ -93,7 +93,6 @@ namespace Brisk{
     {
         return m_cameraFront;
     }
-
 
 
     glm::mat4 PerspectiveCamera::getProjectionView() const

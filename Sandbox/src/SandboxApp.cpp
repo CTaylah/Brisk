@@ -200,6 +200,7 @@ std::vector<float> vertices = {
             shaderProgram.uploadUniformMat4("model", model);
             shaderProgram.uploadUniformMat4("view", camController.getCamera()->getView());
             shaderProgram.uploadUniformMat4("projection", camController.getCamera()->getProjection());
+            shaderProgram.uploadUniform3f("cameraPos", camController.getCamera()->getCameraPosition());
             shaderProgram.uploadUniform3f("lightColor", lightColor);
             shaderProgram.uploadUniform3f("objectColor", toyColor);
             shaderProgram.uploadUniform3f("lightPosition", lightPosition);

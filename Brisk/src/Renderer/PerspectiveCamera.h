@@ -14,7 +14,7 @@ namespace Brisk{
         glm::mat4 getView() const;
         glm::mat4 getProjection() const;
 
-        glm::vec3* getCameraPosition();
+        glm::vec3& getCameraPosition();
         const glm::vec3& getCameraUp();
         const glm::vec3& getCameraFront();
 

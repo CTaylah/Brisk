@@ -6,7 +6,7 @@ namespace Brisk
         : m_camera(screenWidth, screenHeight)
     {
 
-        m_cameraPosition = m_camera.getCameraPosition();
+        m_cameraPosition = &m_camera.getCameraPosition();
 
     }
     
