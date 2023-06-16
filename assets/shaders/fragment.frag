@@ -25,7 +25,7 @@ void main()
 
     float specularStrength = 0.5;
 
-    float shininess = 16;
+    float shininess = 0;
     vec3 viewDir = normalize(-FragPos);
     vec3 refDir = reflect(-lightDir, norm);
     float angle = max(dot(viewDir,refDir), 0.0);

@@ -78,6 +78,12 @@ namespace Brisk{
         m_viewMatrix = glm::lookAt(m_cameraPosition, m_cameraPosition + m_cameraFront, m_cameraUp);  
     }
 
+    void PerspectiveCamera::setAspectRatio(float screenWidth, float screenHeight){
+        m_screenWidth = screenWidth;
+        m_screenHeight = screenHeight;
+        m_projectionMatrix = glm::perspective(glm::radians(45.0f), screenWidth / screenHeight, 0.1f, 100.0f);
+    }
+
     glm::vec3& PerspectiveCamera::getCameraPosition()
     {
         return m_cameraPosition;

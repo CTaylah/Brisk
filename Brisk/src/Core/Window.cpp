@@ -16,6 +16,11 @@ namespace Brisk
     {
         EventHandler::getEventList()->push_back(new MouseEvent(xpos, ypos));
     }
+    
+    void windowSizeCallback(GLFWwindow* window, int width, int height)
+    {
+        EventHandler::getEventList()->push_back(new WindowResizeEvent(width, height));
+    }
 
     Window::Window()
     {
@@ -30,6 +35,7 @@ namespace Brisk
         glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
         glfwSetKeyCallback(m_window, keyCallback);
         glfwSetCursorPosCallback(m_window, mouseCallback);
+        glfwSetWindowSizeCallback(m_window, windowSizeCallback);
     }   
 
 

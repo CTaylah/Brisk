@@ -19,6 +19,17 @@ public:
 
     void run()
     {
+
+        IMGUI_CHECKVERSION();
+        ImGui::CreateContext();
+        ImGuiIO& io = ImGui::GetIO(); (void)io;
+        io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+
+        ImGui::StyleColorsDark();
+
+        ImGui_ImplGlfw_InitForOpenGL(m_window->getGlfwWindow(), true);
+        ImGui_ImplOpenGL3_Init("#version 430");
+
         const std::string pathToAssets = "../../../assets/";
         const std::string pathToShaders = pathToAssets + "shaders/";
 
@@ -48,9 +59,8 @@ public:
 
     glm::vec3 lightColor(1.0f, 1.0f, 1.0f);
     glm::vec3 toyColor(1.0f, 0.5f, 0.31f);
-    glm::vec3 result = lightColor * toyColor;
 
-std::vector<float> vertices = {
+    std::vector<float> vertices = {
     -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
      0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 
      0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 
@@ -93,7 +103,7 @@ std::vector<float> vertices = {
     -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
     -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
 };
-       std::vector<unsigned int> indices = { 0, 1, 3, 1, 2, 3};
+    std::vector<unsigned int> indices = { 0, 1, 3, 1, 2, 3};
 
         Brisk::VertexArray vertexArray;
         Brisk::VertexBuffer vertexBuffer(vertices);
@@ -136,6 +146,8 @@ std::vector<float> vertices = {
         glm::mat4 transform2 = glm::mat4(1.0f);
         
         m_renderer.setClearColor(0.1f, 0.2f, 0.1f, 1.0f);
+        bool show_demo_window = true;
+        bool cursorVisible = false;
         while(!glfwWindowShouldClose(m_window->getGlfwWindow()))
         {
             double currentFrame = glfwGetTime();
@@ -144,9 +156,36 @@ std::vector<float> vertices = {
 
             m_window->onUpdate();
 
-            if(glfwWindowShouldClose(m_window->getGlfwWindow()))
-                break;
+            //Start ImGui Frame
+            ImGui_ImplOpenGL3_NewFrame();
+            ImGui_ImplGlfw_NewFrame();
+            ImGui::NewFrame();
 
+        {
+            static float f = 0.0f;
+            static int counter = 0;
+
+            ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
+
+            ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
+            ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
+
+            ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
+            ImGui::ColorEdit3("Toy Color", (float*)&toyColor); // Edit 3 floats representing a color
+            ImGui::ColorEdit3("Light Color", (float*)&lightColor); // Edit 3 floats representing a color
+            ImGui::SliderFloat3("Toy Position", (float*)&cubPos, -10.0f, 10.0f);
+            
+            
+
+            if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
+                counter++;
+            ImGui::SameLine();
+            ImGui::Text("counter = %d", counter);
+
+            ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
+            ImGui::End();
+        }
+            ImGui::Render();
 
             if(Brisk::Input::isKeyPressed(BRISK_KEY_W))
             {
@@ -167,17 +206,27 @@ std::vector<float> vertices = {
                 camController.moveCamera(Brisk::BR_RIGHT, deltaTime);
             }
 
+            if(Brisk::Input::isKeyPressed(BRISK_KEY_F))
+            {
+                m_window->setCursorVisibility(false);   
+                cursorVisible = false;
+            }
+            if(Brisk::Input::isKeyPressed(BRISK_KEY_G))
+            {
+                m_window->setCursorVisibility(true);   
+                cursorVisible = true;
+            }
+
             if(Brisk::Input::isKeyPressed(BRISK_KEY_ESCAPE))
             {
-                exit(0);
+                return;
             }
-                       
                        
 
             for(int i = 0; i < eventList->size(); i++)
             {
                 Brisk::Event* event = eventList->at(i);
-                if(event->getEventType() == Brisk::BR_MOUSE_MOVE)
+                if(event->getEventType() == Brisk::BR_MOUSE_MOVE && !cursorVisible)
                 {
                     Brisk::MouseEvent* mouseEvent = static_cast<Brisk::MouseEvent*>(event);
                     double xpos = mouseEvent->getXPosition();
@@ -186,7 +235,13 @@ std::vector<float> vertices = {
                     camController.getCamera()->lookAt(xpos, ypos);
                 }
 
-                
+                if(event->getEventType() == Brisk::BR_WINDOW_RESIZE)
+                {
+                    Brisk::WindowResizeEvent* resizeEvent = static_cast<Brisk::WindowResizeEvent*>(event);
+                    camController.getCamera()->setAspectRatio(resizeEvent->getWidth(), resizeEvent->getHeight());
+                    glViewport(0, 0, resizeEvent->getWidth(), resizeEvent->getHeight());
+                }
+
             }             
 
             
@@ -194,6 +249,9 @@ std::vector<float> vertices = {
 
             glm::mat4 transform = glm::mat4(1.0f);
             transform = glm::translate(transform, glm::vec3(sin(glfwGetTime() * 3), cos(glfwGetTime()) * 3, -1.0f));
+            transform = glm::translate(transform, cubPos);
+            transform = glm::rotate(transform, (float)glfwGetTime() * 0.5f, glm::vec3(0.0f, 1.0f, 0.0f));
+            transform = glm::scale(transform, glm::vec3(0.5f, 0.5f, 0.5f));
 
             shaderProgram.use();
             shaderProgram.uploadUniformMat4("transform", transform);
@@ -215,7 +273,9 @@ std::vector<float> vertices = {
 
 //            m_renderer.drawIndexed(vertexArray, indexBuffer, shaderProgram);
             m_renderer.drawTriangles(vertexArray, shaderProgram, 36);
-            m_renderer.drawTriangles(lightCubeArray, lightProgram, 36);
+            m_renderer.drawTriangles(vertexArray, lightProgram, 36);
+
+            ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
             glBindVertexArray(0);
             if(Brisk::EventHandler::getEventList()->size() == 0)
@@ -237,6 +297,12 @@ int main()
     
     Sandbox* sandbox = new Sandbox();
     sandbox->run();
+    Brisk::Log::error("Sandbox has exited");
+
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
+
     delete(sandbox);
     return 0;
 }

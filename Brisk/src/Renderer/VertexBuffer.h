@@ -14,6 +14,8 @@ namespace Brisk{
         //Look into static draw
         VertexBuffer(std::vector<Vertex> vertices);
 
+
+        VertexBuffer(float* vertices);
         VertexBuffer(std::vector<float> vertices);
 
         VertexBuffer() = default;

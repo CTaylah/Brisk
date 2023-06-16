@@ -18,7 +18,8 @@ namespace Brisk{
         const glm::vec3& getCameraUp();
         const glm::vec3& getCameraFront();
 
-        void setSensitivity(double sensitivity) { m_sensitivity = sensitivity;};
+        void setSensitivity(double sensitivity) { m_sensitivity = sensitivity;}
+        void setAspectRatio(float screenWidth, float screenHeight);
         void lookAt(double xPosition, double yPosition);
          
         void updateView();

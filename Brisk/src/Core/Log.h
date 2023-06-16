@@ -32,5 +32,3 @@ namespace Brisk
 
     
 } 
-
-//#define BR_CORE_TRACE(...) ::Brisk::Log::getCoreLogger()->info(__VA_ARGS__)

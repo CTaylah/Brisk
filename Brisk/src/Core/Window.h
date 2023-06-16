@@ -3,6 +3,7 @@
 #include "Event/Event.h"
 #include "Event/KeyboardEvent.h"
 #include "Event/MouseEvent.h"
+#include "Event/WindowResizeEvent.h"
 
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"

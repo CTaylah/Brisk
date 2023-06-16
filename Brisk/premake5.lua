@@ -7,7 +7,7 @@ project "Brisk"
     objdir "%{wks.location}/bin-int/%{prj.name}/%{cfg.buildcfg}" 
     location "%{wks.location}/build/%{prj.name}/"
 
-    includedirs {"include/", "include/glad", "include/glfw",
+    includedirs {"include/", "include/glad", "include/glfw", "include/imgui",
                  "src"    
                 }
 
@@ -15,7 +15,8 @@ project "Brisk"
         "src/**.cpp",
         "src/**.h",
         "src/**.c",
-        "vendor/glad/glad.c"
+        "vendor/**.c",
+        "vendor/**.cpp",
         }
 
     links {

@@ -8,7 +8,9 @@ namespace Brisk
     enum EventType{
         BR_KEY_PRESSED, BR_KEY_RELEASED,
 
-        BR_MOUSE_MOVE, BR,MOUSE_CLICK
+        BR_MOUSE_MOVE, BR,MOUSE_CLICK,
+
+        BR_WINDOW_RESIZE
     };   
 
     class Event{
