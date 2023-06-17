@@ -14,18 +14,23 @@ namespace Brisk{
         //Look into static draw
         VertexBuffer(std::vector<Vertex> vertices);
 
-
         VertexBuffer(float* vertices);
+
         VertexBuffer(std::vector<float> vertices);
 
         VertexBuffer() = default;
+
         void subData(std::vector<Vertex> newVertices);
         void bind();
         void unbind();
+
         ~VertexBuffer();
+
+        unsigned int getVertexCount() {return m_vertexCount;} 
 
     private:
         unsigned int m_bufferID = 0;
+        unsigned int m_vertexCount;
     };
 
 

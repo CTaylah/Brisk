@@ -133,19 +133,25 @@ public:
 
         glm::mat4 model(1.0f);
         glm::vec3 cubPos(1.0f, 4.0f, -3.0f);
-        model = glm::translate(model,cubPos);
+        //model = glm::translate(model,cubPos);
         
         glm::mat4 lightModel(1.0f); 
         glm::vec3 lightPosition(0.7f, 1.2f, -2.0f);
         lightModel = glm::translate(lightModel, lightPosition);
 
         Brisk::ShaderProgram lightProgram(vertexShaderSource, lightShaderSource);
+        shaderProgram.use();
+        shaderProgram.uploadUniform3f("lightColor", lightColor);
+        shaderProgram.uploadUniform3f("objectColor", toyColor);
+        shaderProgram.uploadUniform3f("lightPosition", lightPosition);
 
         double lastFrame = 0.0;
 
         glm::mat4 transform2 = glm::mat4(1.0f);
         
-        m_renderer.setClearColor(0.1f, 0.2f, 0.1f, 1.0f);
+        
+        Brisk::Renderer renderer(camController.getCamera());
+        renderer.setClearColor(0.1f, 0.2f, 0.1f, 1.0f);
         bool show_demo_window = true;
         bool cursorVisible = false;
         while(!glfwWindowShouldClose(m_window->getGlfwWindow()))
@@ -174,7 +180,6 @@ public:
             ImGui::ColorEdit3("Toy Color", (float*)&toyColor); // Edit 3 floats representing a color
             ImGui::ColorEdit3("Light Color", (float*)&lightColor); // Edit 3 floats representing a color
             ImGui::SliderFloat3("Toy Position", (float*)&cubPos, -10.0f, 10.0f);
-            
             
 
             if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
@@ -205,6 +210,16 @@ public:
             {
                 camController.moveCamera(Brisk::BR_RIGHT, deltaTime);
             }
+
+            if(Brisk::Input::isKeyPressed(BRISK_KEY_E))
+            {
+                camController.moveCamera(Brisk::BR_UP, deltaTime);
+            }
+            if(Brisk::Input::isKeyPressed(BRISK_KEY_Q))
+            {
+                camController.moveCamera(Brisk::BR_DOWN, deltaTime);
+            }
+
 
             if(Brisk::Input::isKeyPressed(BRISK_KEY_F))
             {
@@ -245,7 +260,7 @@ public:
             }             
 
             
-            m_renderer.clear();
+            renderer.clear();
 
             glm::mat4 transform = glm::mat4(1.0f);
             transform = glm::translate(transform, glm::vec3(sin(glfwGetTime() * 3), cos(glfwGetTime()) * 3, -1.0f));
@@ -254,26 +269,19 @@ public:
             transform = glm::scale(transform, glm::vec3(0.5f, 0.5f, 0.5f));
 
             shaderProgram.use();
+
             shaderProgram.uploadUniformMat4("transform", transform);
             shaderProgram.uploadUniformMat4("model", model);
-            shaderProgram.uploadUniformMat4("view", camController.getCamera()->getView());
-            shaderProgram.uploadUniformMat4("projection", camController.getCamera()->getProjection());
-            shaderProgram.uploadUniform3f("cameraPos", camController.getCamera()->getCameraPosition());
-            shaderProgram.uploadUniform3f("lightColor", lightColor);
-            shaderProgram.uploadUniform3f("objectColor", toyColor);
-            shaderProgram.uploadUniform3f("lightPosition", lightPosition);
             
 
             lightProgram.use();
             lightProgram.uploadUniformMat4("transform", transform2);
             lightProgram.uploadUniformMat4("model", lightModel);
-            lightProgram.uploadUniformMat4("view", camController.getCamera()->getView());
-            lightProgram.uploadUniformMat4("projection", camController.getCamera()->getProjection());
             lightProgram.uploadUniform3f("lightColor", lightColor);
 
 //            m_renderer.drawIndexed(vertexArray, indexBuffer, shaderProgram);
-            m_renderer.drawTriangles(vertexArray, shaderProgram, 36);
-            m_renderer.drawTriangles(vertexArray, lightProgram, 36);
+            renderer.drawTriangles(vertexArray, shaderProgram, 36);
+            renderer.drawTriangles(vertexArray, lightProgram, 36);
 
             ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 

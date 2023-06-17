@@ -12,7 +12,7 @@ namespace Brisk{
     {
     public:
         // For now, a ShaderProgram can only be made of a single vertex shader and a single fragment shader
-        // Look in the future, this functionality will probably be altered
+        // in the future, this functionality will hopefully be improved 
         ShaderProgram(const std::string vertexShaderFilePath, const std::string fragmentShaderFilePath);
         void use();
 

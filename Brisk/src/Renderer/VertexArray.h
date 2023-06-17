@@ -13,7 +13,9 @@ namespace Brisk{
         VertexArray();
         void bind();
         void unbind();
+
         unsigned int getID();
+        unsigned int getVertexCount();
 
         void addBuffer(VertexBuffer& vertexBuffer, VertexBufferLayout& bufferLayout);
 
@@ -21,5 +23,6 @@ namespace Brisk{
 
     private:
         unsigned int m_vertexArrayID;
+        unsigned int m_vertexCount;
     };
 }

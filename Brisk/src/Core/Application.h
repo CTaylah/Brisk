@@ -29,9 +29,7 @@ namespace Brisk
             void initializeGlfw();
 
 
-
         protected:
             Window* m_window;
-            Renderer m_renderer;
     };
 }

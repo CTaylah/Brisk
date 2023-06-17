@@ -20,8 +20,9 @@
 #include "Renderer/ShaderProgram.h"
 #include "Renderer/Texture.h"
 #include "Renderer/Renderer.h"
-
 #include "Renderer/PerspectiveCameraController.h"
+
+#include "Scene/Entity.h"
 
 #include "Util/FileHandler.h"
 

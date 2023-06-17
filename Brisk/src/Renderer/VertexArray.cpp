@@ -2,7 +2,7 @@
 
 namespace Brisk{
 
-    VertexArray::VertexArray()
+    VertexArray::VertexArray() : m_vertexCount(0)
     {
         glGenVertexArrays(1, &m_vertexArrayID);
         glBindVertexArray(m_vertexArrayID);
@@ -17,6 +17,10 @@ namespace Brisk{
     {
         return m_vertexArrayID;
     }
+    unsigned int VertexArray::getVertexCount()
+    {
+        return m_vertexCount;
+    }
     void VertexArray::unbind()
     {
         glBindVertexArray(0);
@@ -26,6 +30,7 @@ namespace Brisk{
     {
         bind();
         vertexBuffer.bind();
+        m_vertexCount+= vertexBuffer.getVertexCount();
         const std::vector<VertexBufferElement> elements = bufferLayout.getElements();
         unsigned int offset = 0;
         for(unsigned int i = 0; i < elements.size(); i++)

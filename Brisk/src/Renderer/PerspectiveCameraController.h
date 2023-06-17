@@ -7,7 +7,8 @@ namespace Brisk{
     enum Direction
     {
         BR_LEFT, BR_RIGHT, 
-        BR_FORWARD, BR_BACKWARD
+        BR_FORWARD, BR_BACKWARD,
+        BR_UP, BR_DOWN
     };
 
     class PerspectiveCameraController
