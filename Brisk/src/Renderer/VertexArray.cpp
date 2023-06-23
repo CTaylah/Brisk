@@ -30,16 +30,18 @@ namespace Brisk{
     {
         bind();
         vertexBuffer.bind();
-        m_vertexCount+= vertexBuffer.getVertexCount();
         const std::vector<VertexBufferElement> elements = bufferLayout.getElements();
         unsigned int offset = 0;
+        int totalCount = 0;
         for(unsigned int i = 0; i < elements.size(); i++)
         {
             const auto& element = elements[i];
             glEnableVertexAttribArray(i);
             glVertexAttribPointer(i, element.count, element.type, element.normalized, bufferLayout.getStride(), (const void*) offset);
             offset += element.count * VertexBufferElement::getSizeOfType(element.type);
+            totalCount += element.count;
         }
+        m_vertexCount = vertexBuffer.getBufferSizef() / totalCount;
     }
 
     VertexArray::~VertexArray()

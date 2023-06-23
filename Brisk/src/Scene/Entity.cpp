@@ -5,7 +5,7 @@ namespace Brisk{
     void Entity::draw(const Renderer& renderer, ShaderProgram& shaderProgram)
     {
         shaderProgram.use();
-        shaderProgram.uploadUniformMat4("transform", p_tranform);
+        shaderProgram.uploadUniformMat4("model", p_tranform);
 
         if(p_renderData->isIndexed)
         {
@@ -15,6 +15,7 @@ namespace Brisk{
         {
             renderer.drawTriangles(*p_renderData->vertexArray, shaderProgram, p_renderData->vertexArray->getVertexCount());
         }
+
     }
 
     void Entity::setPosition(glm::vec3 position)

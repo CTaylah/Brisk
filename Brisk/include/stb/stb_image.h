@@ -396,9 +396,9 @@ extern "C" {
 #define STBIDEF extern
 #endif
 #endif
-
 //////////////////////////////////////////////////////////////////////////////
 //
+
 // PRIMARY API - works on images of any type
 //
 

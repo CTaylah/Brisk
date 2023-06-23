@@ -7,8 +7,8 @@ project "Brisk"
     objdir "%{wks.location}/bin-int/%{prj.name}/%{cfg.buildcfg}" 
     location "%{wks.location}/build/%{prj.name}/"
 
-    includedirs {"include/", "include/glad", "include/glfw", "include/imgui",
-                 "src"    
+    includedirs {"include/", "include/glad", "include/glfw", "include/imgui", "include/tinygltf",
+                 "include/stb", "src"    
                 }
 
     files {

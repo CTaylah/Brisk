@@ -21,16 +21,20 @@ namespace Brisk{
         VertexBuffer() = default;
 
         void subData(std::vector<Vertex> newVertices);
+
+        unsigned int getBufferSizef() const { return m_bufferSizef; }
+
         void bind();
         void unbind();
 
         ~VertexBuffer();
 
-        unsigned int getVertexCount() {return m_vertexCount;} 
 
     private:
         unsigned int m_bufferID = 0;
-        unsigned int m_vertexCount;
+        //Total number of lfoats in the buffer. Later used to calculate
+        //  the number of vertices
+        unsigned int m_bufferSizef;
     };
 
 

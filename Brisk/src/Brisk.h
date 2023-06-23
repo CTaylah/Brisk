@@ -25,6 +25,7 @@
 #include "Scene/Entity.h"
 
 #include "Util/FileHandler.h"
+#include "Util/GLTFLoader.h"
 
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_glfw.h"

@@ -9,7 +9,7 @@ namespace Brisk {
         sh.uploadUniformMat4("projection", m_camera->getProjection());
         sh.uploadUniformMat4("view", m_camera->getView());
         sh.uploadUniform3f("cameraPos", m_camera->getCameraPosition());
-        
+
         va.bind();
         ib.bind();
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
@@ -22,7 +22,7 @@ namespace Brisk {
         sh.use();
         sh.uploadUniformMat4("projection", m_camera->getProjection());
         sh.uploadUniformMat4("view", m_camera->getView());
-        sh.uploadUniform3f("cameraPos", m_camera->getCameraPosition());
+        sh.uploadUniform3f("cameraPosition", m_camera->getCameraPosition());
 
         va.bind();
         glDrawArrays(GL_TRIANGLES, 0, vertexCount);
@@ -30,9 +30,7 @@ namespace Brisk {
 
     void Renderer::clear() const
     {
-        
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
     }
 
     void Renderer::setClearColor(float r, float g, float b, float a)

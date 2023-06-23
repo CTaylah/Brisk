@@ -1,3 +1,8 @@
+#define TINYGLTF_IMPLEMENTATION
+#define STB_IMAGE_IMPLEMENTATION
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "tinygltf/tiny_gltf.h"
+
 #include "Brisk.h"
 
 #include <iostream>
@@ -9,7 +14,6 @@ class Sandbox : public Brisk::Application
 public:
     Sandbox()
     {
-        
     }
 
     ~Sandbox()
@@ -20,11 +24,13 @@ public:
     void run()
     {
 
+        auto eventList = Brisk::EventHandler::getEventList();
+
         IMGUI_CHECKVERSION();
         ImGui::CreateContext();
         ImGuiIO& io = ImGui::GetIO(); (void)io;
         io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
-
+        m_window->setCursorVisibility(false);
         ImGui::StyleColorsDark();
 
         ImGui_ImplGlfw_InitForOpenGL(m_window->getGlfwWindow(), true);
@@ -57,8 +63,6 @@ public:
         // std::vector<Vertex> vertices = {vert1, vert2, vert3, vert4};
 
 
-    glm::vec3 lightColor(1.0f, 1.0f, 1.0f);
-    glm::vec3 toyColor(1.0f, 0.5f, 0.31f);
 
     std::vector<float> vertices = {
     -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
@@ -114,46 +118,41 @@ public:
 
         Brisk::VertexArray lightCubeArray;
 
-        //Brisk::IndexBuffer indexBuffer(indices);
-
         vertexArray.addBuffer(vertexBuffer,bufferLayout);
         lightCubeArray.addBuffer(vertexBuffer, bufferLayout);
 
-
         Brisk::ShaderProgram shaderProgram(vertexShaderSource, fragmentShaderSource);
+        Brisk::ShaderProgram lightProgram(vertexShaderSource, lightShaderSource);
 
-        m_window->setCursorVisibility(false);
+        Brisk::RenderData renderData(std::make_shared<Brisk::VertexArray>(vertexArray), false);
+
+        Brisk::Entity toyCube(&renderData);
+        Brisk::Entity lightCube(&renderData);
+
+        toyCube.setPosition(glm::vec3(0.0f, 0.0f, 0.0f));
+        lightCube.setPosition(glm::vec3(1.2f, 1.0f, 2.0f));
+
+        glm::vec3 toyPosition = toyCube.getPosition();
+        glm::vec3 lightPosition = lightCube.getPosition();
         
+        glm::vec3 toyColor(0.5f, 0.5f, 0.2f);
+        glm::vec3 lightColor(1.0f,1.0f,1.0f);
+
+        lightProgram.use();
+        lightProgram.uploadUniform3f("lightColor", lightColor);
+
         Brisk::PerspectiveCameraController camController(1280, 720);
         camController.setCameraSpeed(2.6f);
         camController.setSensitivty(.05);
-
-        auto eventList = Brisk::EventHandler::getEventList();
-
-
-        glm::mat4 model(1.0f);
-        glm::vec3 cubPos(1.0f, 4.0f, -3.0f);
-        //model = glm::translate(model,cubPos);
-        
-        glm::mat4 lightModel(1.0f); 
-        glm::vec3 lightPosition(0.7f, 1.2f, -2.0f);
-        lightModel = glm::translate(lightModel, lightPosition);
-
-        Brisk::ShaderProgram lightProgram(vertexShaderSource, lightShaderSource);
-        shaderProgram.use();
-        shaderProgram.uploadUniform3f("lightColor", lightColor);
-        shaderProgram.uploadUniform3f("objectColor", toyColor);
-        shaderProgram.uploadUniform3f("lightPosition", lightPosition);
-
-        double lastFrame = 0.0;
-
-        glm::mat4 transform2 = glm::mat4(1.0f);
         
         
         Brisk::Renderer renderer(camController.getCamera());
         renderer.setClearColor(0.1f, 0.2f, 0.1f, 1.0f);
+
         bool show_demo_window = true;
         bool cursorVisible = false;
+        double lastFrame = 0.0;
+        float shininess = 0.0f;
         while(!glfwWindowShouldClose(m_window->getGlfwWindow()))
         {
             double currentFrame = glfwGetTime();
@@ -168,7 +167,6 @@ public:
             ImGui::NewFrame();
 
         {
-            static float f = 0.0f;
             static int counter = 0;
 
             ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
@@ -176,11 +174,19 @@ public:
             ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
             ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
 
-            ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
+            ImGui::SliderFloat("shininess", &shininess, 0.0f, 256.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
             ImGui::ColorEdit3("Toy Color", (float*)&toyColor); // Edit 3 floats representing a color
             ImGui::ColorEdit3("Light Color", (float*)&lightColor); // Edit 3 floats representing a color
-            ImGui::SliderFloat3("Toy Position", (float*)&cubPos, -10.0f, 10.0f);
+            if(ImGui::SliderFloat3("Toy Position", (float*)&toyPosition, -10.0f, 10.0f))
+            {
+                toyCube.setPosition(toyPosition);
+            }
+             if(ImGui::SliderFloat3("Light Position", (float*)&lightPosition, -10.0f, 10.0f))
+            {
+                lightCube.setPosition(lightPosition);
+            }
             
+           
 
             if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
                 counter++;
@@ -220,7 +226,6 @@ public:
                 camController.moveCamera(Brisk::BR_DOWN, deltaTime);
             }
 
-
             if(Brisk::Input::isKeyPressed(BRISK_KEY_F))
             {
                 m_window->setCursorVisibility(false);   
@@ -259,29 +264,22 @@ public:
 
             }             
 
-            
+
             renderer.clear();
 
-            glm::mat4 transform = glm::mat4(1.0f);
-            transform = glm::translate(transform, glm::vec3(sin(glfwGetTime() * 3), cos(glfwGetTime()) * 3, -1.0f));
-            transform = glm::translate(transform, cubPos);
-            transform = glm::rotate(transform, (float)glfwGetTime() * 0.5f, glm::vec3(0.0f, 1.0f, 0.0f));
-            transform = glm::scale(transform, glm::vec3(0.5f, 0.5f, 0.5f));
-
             shaderProgram.use();
-
-            shaderProgram.uploadUniformMat4("transform", transform);
-            shaderProgram.uploadUniformMat4("model", model);
-            
+            shaderProgram.uploadUniform3f("lightPosition", lightPosition);
+            shaderProgram.uploadUniform3f("lightColor", lightColor);
+            shaderProgram.uploadUniform3f("objectColor", toyColor);
+            shaderProgram.uploadUniformf("shininess", shininess);
+            toyCube.draw(renderer, shaderProgram);
 
             lightProgram.use();
-            lightProgram.uploadUniformMat4("transform", transform2);
-            lightProgram.uploadUniformMat4("model", lightModel);
             lightProgram.uploadUniform3f("lightColor", lightColor);
+            lightCube.draw(renderer, lightProgram);
 
-//            m_renderer.drawIndexed(vertexArray, indexBuffer, shaderProgram);
-            renderer.drawTriangles(vertexArray, shaderProgram, 36);
-            renderer.drawTriangles(vertexArray, lightProgram, 36);
+            //renderer.drawTriangles(vertexArray, shaderProgram, 36);
+            //renderer.drawTriangles(vertexArray, lightProgram, 36);
 
             ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
@@ -306,7 +304,7 @@ int main()
     Sandbox* sandbox = new Sandbox();
     sandbox->run();
     Brisk::Log::error("Sandbox has exited");
-
+    Brisk::testGLTF();
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();

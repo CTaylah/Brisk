@@ -23,6 +23,6 @@ namespace Brisk{
 
     private:
         unsigned int m_vertexArrayID;
-        unsigned int m_vertexCount;
+        unsigned int m_vertexCount = 0;
     };
 }
