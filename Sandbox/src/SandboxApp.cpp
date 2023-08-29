@@ -1,7 +1,6 @@
 #define TINYGLTF_IMPLEMENTATION
 #define STB_IMAGE_IMPLEMENTATION
 #define STB_IMAGE_WRITE_IMPLEMENTATION
-#include "tinygltf/tiny_gltf.h"
 
 #include "Brisk.h"
 
@@ -304,7 +303,6 @@ int main()
     Sandbox* sandbox = new Sandbox();
     sandbox->run();
     Brisk::Log::error("Sandbox has exited");
-    Brisk::testGLTF();
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();
